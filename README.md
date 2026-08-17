@@ -5,9 +5,10 @@ Open `index.html` in any modern browser to preview the site.
 **Locks:** Step 1 code `180627` · Step 2 word `sidwani` (any case)  
 **Birthday:** 18 August 2000
 
-**Reels:** Add your two reel videos to `assets/videos/`:
-- `reel-now.mp4` — plays when she picks the real one (you are the actual gift)
-- `reel-soon.mp4` — teaser reel; full version drops later
+**Bond reels:** Three videos in `assets/videos/`:
+- `reel-1.mp4` — *Pehli yaadein / Ab tak ka hum*
+- `reel-2.mp4` — *Beech ka safar*
+- `reel-3.mp4` — *Aaj ka hum* (latest reel)
 
 ## Make it personal
 
