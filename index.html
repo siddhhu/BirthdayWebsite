@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="theme-color" content="#0d1028"/>
+  <title>Our Little Universe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="stars" aria-hidden="true"></div>
+  <div id="shooting-stars" aria-hidden="true"></div>
+  <div id="floating-quotes" class="floating-quotes" aria-hidden="true"></div>
+  <div id="ambient-gifs" class="ambient-gifs hidden" aria-hidden="true"></div>
+  <div id="toast" class="toast" role="status"></div>
+
+  <!-- Passcode lock (step 1) -->
+  <section id="lock" class="lock screen">
+    <div class="lock-orbs" aria-hidden="true">
+      <span>♡</span><span>✦</span><span>♡</span>
+    </div>
+    <div class="glass intro-card reveal">
+      <span class="lock-step">Step 1 of 2</span>
+      <span class="eyebrow" id="lock-eyebrow">pehla darwaza · sirf tumhare liye</span>
+      <h1><span id="lock-title-before">Ke liye</span> <em id="lock-her-name">Shivani.</em></h1>
+      <p id="lock-hint">6 digit code daalo — woh jo sirf hum dono jaante hain.</p>
+      <small id="lock-hint-small" class="lock-hint-small"></small>
+      <form id="unlock-form">
+        <input id="passcode" aria-label="First passcode" inputmode="numeric" maxlength="6" type="password" placeholder="• • • • • •"/>
+        <button class="btn gold" id="lock-button">Pehla lock kholo →</button>
+      </form>
+      <small id="lock-note"></small>
+      <small id="lock-nudge" class="lock-nudge"></small>
+    </div>
+  </section>
+
+  <!-- Secret word lock (step 2) -->
+  <section id="lock2" class="lock screen hidden">
+    <div class="lock-orbs" aria-hidden="true">
+      <span>✦</span><span>♡</span><span>✦</span>
+    </div>
+    <div class="glass intro-card reveal">
+      <span class="lock-step">Step 2 of 2</span>
+      <span class="eyebrow" id="lock2-eyebrow">doosra darwaza · almost there</span>
+      <h1 id="lock2-title">Ek aur <em>tricky</em> puzzle.</h1>
+      <p id="lock2-hint">Password woh word hai jo couple sticker pe lagta — par humne kabhi publicly share nahi kiya 😏</p>
+      <small id="lock2-hint-small" class="lock-hint-small"></small>
+      <form id="unlock-form-2">
+        <input id="passcode-2" aria-label="Secret word passcode" maxlength="12" type="password" placeholder="7 letters…" autocapitalize="off" autocomplete="off" spellcheck="false"/>
+        <button class="btn gold" id="lock2-button">Andar chalo →</button>
+      </form>
+      <small id="lock2-note"></small>
+      <small id="lock2-nudge" class="lock-nudge"></small>
+    </div>
+  </section>
+
+  <!-- Landing -->
+  <section id="landing" class="screen landing hidden">
+    <div id="landing-tags" class="landing-tags" aria-hidden="true"></div>
+    <div class="landing-stage">
+      <div class="landing-visual">
+        <div id="moon" class="moon" role="button" tabindex="0" aria-label="A glowing secret moon">
+          <img src="assets/bear-birthday-hero.png" alt="Two bears celebrating under a pink sky"/>
+        </div>
+        <p id="moon-label" class="moon-label">Tap karo — ek chhota sa secret hai ✦</p>
+        <div id="landing-gif" class="landing-gif-wrap"></div>
+      </div>
+      <div class="landing-copy">
+        <p class="eyebrow" id="landing-eyebrow">18 August · hamara chhota sa universe</p>
+        <div id="age-badge" class="age-badge"></div>
+        <h1><span id="landing-title-before">Happy Birthday,</span><br/><em id="her-name">Shivani</em> ✨</h1>
+        <p id="subtitle"></p>
+        <p id="landing-teaser" class="landing-teaser"></p>
+        <button id="start-story" class="btn gold">
+          <span id="landing-button-text">Chalo, kahani shuru karein</span>
+          <span class="btn-arrow">→</span>
+        </button>
+        <small id="landing-footnote">Headphones lagao — full feel ke liye 🎧</small>
+      </div>
+    </div>
+    <button id="secret-star" class="secret-star" aria-label="A tiny glowing star">✦</button>
+  </section>
+
+  <!-- Opening typewriter -->
+  <section id="opening" class="screen opening hidden">
+    <p class="eyebrow" id="opening-eyebrow">ek chhoti si shuruat</p>
+    <h2 id="type-line"><span id="type-text"></span><span class="type-cursor" aria-hidden="true">|</span></h2>
+    <button id="skip-opening" class="text-btn">Skip kar do</button>
+  </section>
+
+  <main id="site" class="hidden">
+    <button id="music-button" class="music" aria-label="Play music">
+      <span class="music-icon">♪</span> <span class="music-label">gaana</span>
+    </button>
+
+    <nav class="nav" aria-label="Sections">
+      <a href="#home" data-nav="home">Home</a>
+      <a href="#story" data-nav="story">Story</a>
+      <a href="#memories" data-nav="memories">Memories</a>
+      <a href="#reasons" data-nav="reasons">Reasons</a>
+      <a href="#bubu" data-nav="bubu">Bubu</a>
+      <a href="#letter" data-nav="letter">Letter</a>
+      <a href="#cake-section" data-nav="cake">Cake</a>
+      <a href="#gift-guess" data-nav="gift">Reel</a>
+      <a href="#final" data-nav="final">Surprise</a>
+    </nav>
+
+    <div class="scroll-progress"><i></i></div>
+
+    <div id="love-meter" class="love-meter" aria-label="Love meter">
+      <span class="love-meter-label">Pyaar meter</span>
+      <div class="love-meter-track"><i id="love-meter-fill"></i></div>
+      <span id="love-meter-text" class="love-meter-text">Secrets dhoondho ♡</span>
+    </div>
+
+    <!-- Hero -->
+    <section id="home" class="hero section" data-section="home">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Tumhari raat ka aasman</p>
+        <h1>Har star yahan<br/><em>tumhara naam</em> jaanta hai.</h1>
+        <p>Dheere scroll karo, meri jaan. Maine apna dil har jagah chhupa ke rakha hai.</p>
+        <a href="#story" class="btn ghost">Chalo shuru karein ↓</a>
+      </div>
+      <div id="gif-hero" class="gif gif-hero gif-float gif-pop" data-float-range="14" data-float-dur="3.5"></div>
+      <div id="gif-hero-alt" class="gif gif-hero-alt gif-float gif-pop" data-float-range="10" data-float-dur="4.2"></div>
+    </section>
+
+    <!-- GIF parade marquee -->
+    <div id="gif-parade" class="gif-parade" aria-hidden="true">
+      <p class="gif-parade-title">✦ Bubu &amp; Dudu ka pyaara universe ✦</p>
+    </div>
+
+    <!-- Story -->
+    <section id="story" class="section story" data-section="story">
+      <header class="section-head reveal">
+        <span>01</span>
+        <p class="eyebrow">Hamari kahani</p>
+        <h2>Kuch chapters<br/><em>hum dono ke.</em></h2>
+        <p>Kisi bhi moment pe tap karo — thodi si kahani khulegi.</p>
+      </header>
+      <div id="timeline" class="timeline"></div>
+      <div id="gif-story" class="gif gif-story"></div>
+    </section>
+
+    <!-- Memories -->
+    <section id="memories" class="section memories" data-section="memories">
+      <header class="section-head reveal">
+        <span>02</span>
+        <p class="eyebrow">Yaadon ki album</p>
+        <h2>Jo pal main<br/><em>hamesha sambhal ke rakhna chahta hoon.</em></h2>
+        <p>Har photo alag hai — koi repeat nahi. Tap karke kholo ✨</p>
+      </header>
+      <div id="gallery" class="gallery"></div>
+
+      <!-- Featured couple photos -->
+      <div id="our-photos" class="our-photos reveal"></div>
+
+      <!-- Full photo album with filters -->
+      <div class="photo-album-wrap reveal">
+        <p class="photo-album-intro">Hamari tasveerein — har ek mein ek cute si kahani hai 📸</p>
+        <div id="photo-filters" class="photo-filters"></div>
+        <div id="photo-album" class="photo-album"></div>
+      </div>
+
+      <div id="gif-memories" class="gif gif-gallery gif-float" data-float-range="11"></div>
+      <div id="gif-memories-alt" class="gif gif-gallery-alt gif-float" data-float-range="9" data-float-dur="3.8"></div>
+    </section>
+
+    <!-- Reasons -->
+    <section id="reasons" class="section reasons" data-section="reasons">
+      <header class="section-head reveal">
+        <span>03</span>
+        <p class="eyebrow">Kyun tum special ho</p>
+        <h2>Paanch reasons<br/><em>bahut saare mein se.</em></h2>
+        <p id="reason-count">0 mein se 5 reasons khuli hain</p>
+      </header>
+      <div id="reason-grid" class="reason-grid"></div>
+      <p id="forever" class="forever hidden">Aur main likhta reh sakta hoon… forever ❤️</p>
+      <button id="dont-click" class="text-btn danger">mat dabana (dabana mat)</button>
+      <div id="gif-reasons" class="gif gif-reasons"></div>
+    </section>
+
+    <!-- Secrets -->
+    <section class="section secret-section" data-section="secrets">
+      <div id="gif-secret" class="gif gif-dance gif-float" data-float-range="10"></div>
+      <div id="gif-secret-alt" class="gif gif-dance-alt gif-float" data-float-range="8" data-float-dur="3.6"></div>
+      <p class="eyebrow reveal">Chhupa hua raaz</p>
+      <h2 class="reveal">Kuch cheezein<br/><em>khud dhoondni padti hain.</em></h2>
+      <button id="memory-heart" class="heart-button" aria-label="Open a secret relationship memory">♡</button>
+      <p>Dil pe tap karo. Ya kahin bhi <kbd>L</kbd> dabao.</p>
+      <small id="secret-count">0 mein se 5 secrets mile</small>
+    </section>
+
+    <!-- Bubu & Dudu -->
+    <section id="bubu" class="section bubu-section" data-section="bubu">
+      <header class="section-head section-head-center reveal">
+        <span>04</span>
+        <p class="eyebrow">Bubu &amp; Dudu ka ek din</p>
+        <h2>Chhoti si moments,<br/><em>bada sa pyaar.</em></h2>
+        <p>Card pe tap karo — har ek mein thodi si shaitani aur bahut saara pyaar hai.</p>
+      </header>
+      <div id="bubu-grid" class="bubu-grid"></div>
+      <button id="love-burst" class="btn ghost love-burst-btn">Booba ko love burst bhejo ♡</button>
+    </section>
+
+    <!-- GIF Wall -->
+    <section id="gif-wall-section" class="section gif-wall-section" data-section="gifwall">
+      <header class="section-head section-head-center reveal">
+        <span>✦</span>
+        <p class="eyebrow">Bubu &amp; Dudu ki duniya</p>
+        <h2>Hamara cute sa<br/><em>universe.</em></h2>
+        <p>Koi bhi GIF dabao — thoda sa jadoo hoga ✨</p>
+      </header>
+      <div id="gif-wall" class="gif-wall"></div>
+    </section>
+
+    <!-- Promises -->
+    <section id="promises" class="section promises-section" data-section="promises">
+      <header class="section-head section-head-center reveal">
+        <span>♡</span>
+        <p class="eyebrow">Chhoti si kasmein</p>
+        <h2>Har kal ke liye<br/><em>tumhare saath.</em></h2>
+      </header>
+      <div id="promise-list" class="promise-list"></div>
+      <div id="gif-promises" class="gif gif-promises gif-float" data-float-range="12"></div>
+    </section>
+
+    <!-- Letter -->
+    <section id="letter" class="section letter-section" data-section="letter">
+      <header class="section-head reveal">
+        <span>05</span>
+        <p class="eyebrow">Dil se ek khat</p>
+        <h2>Jo main kehna chahta tha<br/><em>par shayad achhe se na keh paaya.</em></h2>
+      </header>
+      <div id="gif-letter" class="gif gif-letter"></div>
+      <button id="envelope" class="envelope" aria-expanded="false" aria-label="Open love letter"><span>♡</span></button>
+      <article id="letter-card" class="letter-card hidden">
+        <div id="letter-text"></div>
+        <button id="read-again" class="text-btn">Phir se padh lo ↻</button>
+      </article>
+    </section>
+
+    <!-- Cake -->
+    <section id="cake-section" class="section cake-section" data-section="cake">
+      <p class="eyebrow reveal">Birthday wish time</p>
+      <h2 class="reveal">Cake ki candles<br/><em>bujha do na.</em></h2>
+      <p class="reveal">Har candle pe tap karo, phir apni wish maang lo.</p>
+      <div id="gif-cake" class="gif gif-cake"></div>
+      <div class="cake-stage reveal">
+        <img src="assets/shivani-birthday-cake.png" alt="A birthday cake for Shivani"/>
+        <span class="cake-label">Shivani</span>
+        <div id="candles" class="candles" aria-label="Birthday candles"></div>
+      </div>
+      <button id="wish-button" class="btn gold" disabled>Wish maang lo ✦</button>
+      <p id="cake-status"></p>
+    </section>
+
+    <!-- Reel guess -->
+    <section id="gift-guess" class="section gift-guess-section" data-section="gift">
+      <header class="section-head section-head-center reveal">
+        <span>06</span>
+        <p class="eyebrow" id="gift-guess-eyebrow">Reel time 🎬</p>
+        <h2 id="gift-guess-title">Guess karo na — kaun si<br/><em>asli reel</em> hai?</h2>
+        <p id="gift-guess-hint" class="gift-guess-hint">Do mystery reels hain. Ek abhi chalegi ♡ Doosri thodi der baad drop hogi.</p>
+      </header>
+      <p id="gift-guess-prompt" class="gift-guess-prompt reveal">Pehle kaun si reel dekhenge? 👇</p>
+      <div id="gift-boxes" class="gift-boxes reveal"></div>
+      <div id="gift-reveal" class="gift-reveal hidden">
+        <div class="gift-video-wrap reel-frame">
+          <video id="gift-video" class="gift-video reel-player" controls playsinline preload="metadata"></video>
+          <p id="gift-video-placeholder" class="gift-video-placeholder hidden">Reel yahan add karo — config.js mein path set karo</p>
+        </div>
+        <div class="gift-reveal-copy">
+          <h3 id="gift-reveal-title"></h3>
+          <p id="gift-reveal-text"></p>
+        </div>
+      </div>
+      <p id="gift-guess-status" class="gift-guess-status reveal"></p>
+    </section>
+
+    <!-- Final surprise -->
+    <section id="final" class="section final" data-section="final">
+      <div id="gif-flying" class="gif flying-gif"></div>
+      <div id="gif-flying-alt" class="gif flying-gif flying-gif-alt"></div>
+
+      <p class="eyebrow reveal">Last wala surprise</p>
+      <h2 class="reveal">Ab bas ek baat<br/><em>reh gayi hai…</em></h2>
+
+      <div class="final-gif-row reveal">
+        <div id="gif-final" class="final-gif-card gif-pop"></div>
+        <div id="gif-final-alt" class="final-gif-card gif-pop"></div>
+        <div id="gif-final-extra" class="final-gif-card gif-pop"></div>
+      </div>
+
+      <button id="gift" class="gift reveal" aria-expanded="false" aria-label="Open your birthday gift"><span>♡</span></button>
+
+      <div id="final-message" class="final-message hidden">
+        <p id="final-text"></p>
+        <div id="final-celebration" class="final-celebration"></div>
+        <a id="gift-link" class="btn gold hidden" href="#">See your surprise →</a>
+        <button id="kiss" class="btn ghost">Mujhe kiss bhejo 💋</button>
+        <button id="replay" class="text-btn">Poora universe phir se dekho ↻</button>
+      </div>
+
+      <p class="sidwani-badge">SIDWANI · hamesha &amp; forever</p>
+    </section>
+  </main>
+
+  <dialog id="lightbox" class="lightbox">
+    <button id="close-lightbox" aria-label="Close image">×</button>
+    <button id="previous-image" aria-label="Previous image">←</button>
+    <figure>
+      <img id="lightbox-image" alt=""/>
+      <figcaption id="lightbox-caption"></figcaption>
+    </figure>
+    <button id="next-image" aria-label="Next image">→</button>
+  </dialog>
+
+  <audio id="audio" preload="none" loop></audio>
+  <script src="config.js"></script>
+  <script src="animations.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
