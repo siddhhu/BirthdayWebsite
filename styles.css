@@ -2449,3 +2449,614 @@ input.shake { animation: shake .45s; }
   .flying-gif, .flying-gif-alt { display: none; }
   .ambient-gifs { display: none !important; }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ENHANCEMENT 1 — Countdown Timer
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.countdown-wrap {
+  margin-bottom: 18px;
+  text-align: center;
+  animation: countdownPulse 2s ease-in-out infinite;
+}
+
+.countdown-label {
+  font: italic 14px var(--serif);
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+
+.countdown-digits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(145deg, #ffffff14, #ffffff06);
+  border: 1px solid #ffffff18;
+  border-radius: 14px;
+  padding: 10px 16px 8px;
+  min-width: 62px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px #0003, inset 0 1px 0 #ffffff10;
+}
+
+.countdown-unit span {
+  font: 700 clamp(28px, 6vw, 42px) var(--sans);
+  background: linear-gradient(135deg, var(--pink), var(--lav));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.countdown-unit small {
+  font: 500 10px var(--sans);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 4px;
+}
+
+.countdown-sep {
+  font: 700 28px var(--sans);
+  color: var(--gold);
+  opacity: 0.5;
+  animation: countdownBlink 1s steps(2) infinite;
+}
+
+.countdown-birthday {
+  font: 700 clamp(18px, 4vw, 26px) var(--serif);
+  background: linear-gradient(135deg, var(--gold), var(--pink), var(--lav));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbowText 3s ease infinite;
+  margin-top: 12px;
+}
+
+@keyframes countdownPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+
+@keyframes countdownBlink {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0; }
+}
+
+@keyframes rainbowText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ENHANCEMENT 2 — Persistent Floating Hearts
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.floating-hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.fh-heart {
+  position: absolute;
+  bottom: -30px;
+  color: var(--pink);
+  opacity: 0;
+  animation: floatHeart linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes floatHeart {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.15;
+  }
+  50% {
+    transform: translateY(-50vh) translateX(30px) rotate(15deg) scale(0.8);
+    opacity: 0.12;
+  }
+  90% {
+    opacity: 0.05;
+  }
+  100% {
+    transform: translateY(-105vh) translateX(-20px) rotate(-10deg) scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ENHANCEMENT 3 — Cinematic Section Entrances
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px) scale(0.96);
+  filter: blur(6px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px) scale(0.96);
+  filter: blur(6px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.85);
+  filter: blur(8px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-left.visible,
+.reveal-right.visible,
+.reveal-scale.visible {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  filter: blur(0);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ENHANCEMENT 4 — Love Days Counter
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.love-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 14px 0 18px;
+  padding: 10px 20px;
+  background: linear-gradient(145deg, #ffffff10, #ffffff06);
+  border: 1px solid #ffffff15;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  width: fit-content;
+}
+
+.love-counter-heart {
+  font-size: 22px;
+  animation: heartbeat 1.2s ease-in-out infinite;
+  display: inline-block;
+}
+
+.love-days {
+  font: 700 clamp(20px, 4vw, 28px) var(--sans);
+  background: linear-gradient(135deg, var(--pink), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.love-counter-text {
+  font: italic 13px var(--serif);
+  color: var(--muted);
+  letter-spacing: 0.4px;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.25); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.18); }
+  60% { transform: scale(1); }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ENHANCEMENT 5 — Twinkling Stars
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.twinkle-stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.twinkle-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  animation: twinkle var(--twinkle-dur, 3s) ease-in-out infinite;
+  animation-delay: var(--twinkle-delay, 0s);
+  opacity: 0;
+  box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.3);
+}
+
+.twinkle-star.gold { background: var(--gold); box-shadow: 0 0 4px 1px rgba(245, 204, 131, 0.4); }
+.twinkle-star.pink { background: var(--pink); box-shadow: 0 0 4px 1px rgba(255, 154, 181, 0.4); }
+.twinkle-star.lav { background: var(--lav); box-shadow: 0 0 4px 1px rgba(187, 168, 255, 0.4); }
+
+.twinkle-star.large {
+  width: 4px;
+  height: 4px;
+  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  20% { opacity: 0.8; transform: scale(1); }
+  40% { opacity: 0.3; transform: scale(0.8); }
+  60% { opacity: 0.9; transform: scale(1.1); }
+  80% { opacity: 0.4; transform: scale(0.9); }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ENHANCEMENT 6 — Music Visualizer Bars
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.music-viz {
+  display: none;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  margin-left: 6px;
+}
+
+.playing .music-viz {
+  display: inline-flex;
+}
+
+.music-viz i {
+  display: block;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--gold);
+  height: 4px;
+  animation: vizBar 0.6s ease-in-out infinite alternate;
+}
+
+.music-viz i:nth-child(1) { animation-delay: 0s; }
+.music-viz i:nth-child(2) { animation-delay: 0.1s; height: 8px; }
+.music-viz i:nth-child(3) { animation-delay: 0.2s; height: 12px; }
+.music-viz i:nth-child(4) { animation-delay: 0.15s; height: 6px; }
+.music-viz i:nth-child(5) { animation-delay: 0.05s; height: 10px; }
+
+@keyframes vizBar {
+  0% { height: 3px; }
+  100% { height: 14px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ENHANCEMENT 7 — Song Dedication (Vinyl Record Cards)
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.playlist-section {
+  padding-bottom: 80px;
+}
+
+.playlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.vinyl-card {
+  position: relative;
+  background: linear-gradient(145deg, #ffffff10, #ffffff05);
+  border: 1px solid #ffffff15;
+  border-radius: 20px;
+  padding: 28px 22px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  cursor: default;
+  overflow: hidden;
+}
+
+.vinyl-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 50%, var(--card-color, var(--pink)), transparent 50%);
+  opacity: 0.06;
+  transition: opacity 0.4s ease;
+}
+
+.vinyl-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 40px #0004, 0 0 30px color-mix(in srgb, var(--card-color, var(--pink)) 15%, transparent);
+}
+
+.vinyl-card:hover::before {
+  opacity: 0.12;
+}
+
+.vinyl-disc {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  background: conic-gradient(from 0deg, #1a1a2e, #2d2d44, #1a1a2e, #2d2d44, #1a1a2e);
+  border: 3px solid #ffffff18;
+  position: relative;
+  animation: spin 4s linear infinite;
+  animation-play-state: paused;
+  box-shadow: 0 4px 16px #0003;
+}
+
+.vinyl-card:hover .vinyl-disc {
+  animation-play-state: running;
+}
+
+.vinyl-disc::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--card-color, var(--pink));
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--card-color, var(--pink)) 40%, transparent);
+}
+
+.vinyl-title {
+  font: 600 16px var(--sans);
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.vinyl-artist {
+  font: 400 12px var(--sans);
+  color: var(--muted);
+  margin-bottom: 12px;
+  letter-spacing: 0.3px;
+}
+
+.vinyl-why {
+  font: italic 13px var(--serif);
+  color: var(--pink);
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ENHANCEMENT 8 — 3D Photo Tilt Effect
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.tilt-3d {
+  transition: transform 0.15s ease-out;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt-3d:hover {
+  box-shadow: 0 20px 50px #0005, 0 0 20px #ff9ab508;
+}
+
+.memory.tilt-3d,
+.polaroid.tilt-3d,
+.album-tile.tilt-3d {
+  perspective: 800px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ENHANCEMENT 9 — Time Capsule Modal
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.time-capsule {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: #0d1028ee;
+  backdrop-filter: blur(12px);
+  padding: 24px;
+  animation: capsuleFadeIn 0.5s ease;
+}
+
+.time-capsule.hidden {
+  display: none !important;
+}
+
+.time-capsule-card {
+  width: min(480px, 100%);
+  text-align: center;
+  padding: 48px 32px;
+  border-radius: 28px;
+  position: relative;
+  animation: capsuleSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.time-capsule-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 24px;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: background 0.2s, color 0.2s;
+}
+
+.time-capsule-close:hover {
+  background: #ffffff15;
+  color: var(--ink);
+}
+
+.time-capsule-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+  animation: capsulePulse 2s ease-in-out infinite;
+}
+
+.time-capsule h2 {
+  font: 700 clamp(26px, 5vw, 36px) var(--serif);
+  background: linear-gradient(135deg, var(--gold), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 6px;
+}
+
+.time-capsule-date {
+  font: 600 14px var(--sans);
+  color: var(--gold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  opacity: 0.7;
+}
+
+.time-capsule-msg {
+  font: 400 15px/1.7 var(--sans);
+  color: var(--muted);
+  max-width: 380px;
+  margin: 0 auto 20px;
+}
+
+.time-capsule-footer {
+  font: italic 13px var(--serif);
+  color: var(--pink);
+  opacity: 0.7;
+  margin-bottom: 18px;
+}
+
+.time-capsule .btn.gold.sealed {
+  background: #ffffff15;
+  color: var(--muted);
+  cursor: default;
+  pointer-events: none;
+}
+
+@keyframes capsuleFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes capsuleSlideUp {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes capsulePulse {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.1) rotate(-5deg); }
+  75% { transform: scale(1.05) rotate(5deg); }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ENHANCEMENT 10 — Rainbow Scroll Progress
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.scroll-progress i {
+  background: linear-gradient(90deg, var(--pink), var(--lav), var(--gold), var(--pink)) !important;
+  background-size: 300% 100% !important;
+  animation: rainbowScroll 4s linear infinite !important;
+}
+
+@keyframes rainbowScroll {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE — New Enhancements
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 620px) {
+  .countdown-unit {
+    min-width: 52px;
+    padding: 8px 12px 6px;
+  }
+
+  .love-counter {
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 14px;
+  }
+
+  .playlist-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    padding: 0 16px;
+  }
+
+  .vinyl-card {
+    padding: 20px 16px;
+  }
+
+  .vinyl-disc {
+    width: 60px;
+    height: 60px;
+  }
+
+  .time-capsule-card {
+    padding: 36px 22px;
+  }
+}
+
+@media (max-width: 380px) {
+  .playlist-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fh-heart,
+  .twinkle-star,
+  .countdown-wrap,
+  .love-counter-heart,
+  .vinyl-disc,
+  .music-viz i {
+    animation: none !important;
+  }
+
+  .twinkle-star { opacity: 0.4 !important; }
+  .fh-heart { display: none !important; }
+}
+
+/* See More Photo Album styles */
+.see-more-wrap {
+  text-align: center;
+  margin-top: 32px;
+}
+
+#photo-album.collapsed .album-tile:nth-child(n+13) {
+  display: none !important;
+}

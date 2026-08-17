@@ -276,6 +276,12 @@
       chip.addEventListener('click', () => {
         $$('.photo-filter').forEach((c) => c.classList.remove('active'));
         chip.classList.add('active');
+        const album = $('#photo-album');
+        if (album && album.classList.contains('collapsed')) {
+          album.classList.remove('collapsed');
+          const seeMoreWrap = $('#see-more-wrap');
+          if (seeMoreWrap) seeMoreWrap.classList.add('hidden');
+        }
         filterPhotoAlbum(filter.id);
       });
       container.append(chip);
@@ -444,7 +450,7 @@
       candle.style.left = `${x}%`;
       candle.style.top = `${i % 2 ? 45 : 34}px`;
       candle.setAttribute('aria-label', `Blow out candle ${i + 1}`);
-      candle.addEventListener('click', () => extinguishCandle(candle));
+      candle.addEventListener('click', () => extinguishAllCandles());
       $('#candles').append(candle);
     });
     updateCakeStatus();
@@ -455,20 +461,22 @@
     const out = $$('.candle.out').length;
     const status = $('#cake-status');
     if (out >= total) {
-      status.textContent = `Saari 5 candles bujh gayi! Ab wish maang lo, ${config.nickname || config.herName} ✦`;
+      status.textContent = `Saari candles bujh gayi! Ab wish maang lo, ${config.nickname || config.herName} ✦`;
     } else {
-      status.textContent = `${out}/${total} candles bujhi — ${total - out} aur baaki. 5 baar phoonk maaro 🕯️`;
+      status.textContent = `Ek zor se phoonk maaro ya candle pe tap karo 🕯️`;
     }
   }
 
-  function extinguishCandle(candle) {
-    if (!candle || candle.classList.contains('out')) return false;
-    candle.classList.add('out');
-    candle.disabled = true;
-    burst(undefined, undefined, 12);
+  function extinguishAllCandles() {
+    const active = $$('.candle:not(.out)');
+    if (!active.length) return;
+    active.forEach((candle) => {
+      candle.classList.add('out');
+      candle.disabled = true;
+    });
+    burst(undefined, undefined, 50);
     updateCakeStatus();
     checkAllCandlesOut();
-    return true;
   }
 
   function checkAllCandlesOut() {
@@ -586,11 +594,8 @@
           const now = Date.now();
           if (rms > threshold && now - lastBlow > 700) {
             lastBlow = now;
-            const next = $$('.candle:not(.out)')[0];
-            if (next) {
-              extinguishCandle(next);
-              status.textContent = 'Wah! Ek aur candle bujhi 🕯️';
-            }
+            extinguishAllCandles();
+            status.textContent = 'Wah! Saari candles bujh gayi 🕯️';
           }
           baseline = baseline * 0.985 + rms * 0.015;
         }
@@ -794,6 +799,8 @@
       showAmbientLayer();
       FX.initScrollReveal();
       FX.initGifFloat();
+      applyTilt3D();
+      FX.init3DTilt();
       tryStartMusic();
     });
   }
@@ -875,6 +882,181 @@
     $$('[data-section]').forEach((s) => observer.observe(s));
   }
 
+  // ── Enhancement: Countdown Timer ──────────────────────────────────────────
+
+  function initCountdown() {
+    const birthday = new Date(config.birthday);
+    const thisYear = new Date().getFullYear();
+    let target = new Date(thisYear, birthday.getMonth(), birthday.getDate());
+    if (target < new Date()) {
+      // Birthday already passed or is happening now
+      const wrap = $('#countdown');
+      if (wrap) {
+        const digits = wrap.querySelector('.countdown-digits');
+        const label = wrap.querySelector('.countdown-label');
+        if (digits) digits.classList.add('hidden');
+        if (label) label.classList.add('hidden');
+        const bdEl = $('#countdown-birthday');
+        if (bdEl) bdEl.classList.remove('hidden');
+      }
+      return;
+    }
+
+    function update() {
+      const now = new Date();
+      const diff = target - now;
+      if (diff <= 0) {
+        const digits = document.querySelector('.countdown-digits');
+        const label = document.querySelector('.countdown-label');
+        if (digits) digits.classList.add('hidden');
+        if (label) label.classList.add('hidden');
+        const bdEl = $('#countdown-birthday');
+        if (bdEl) bdEl.classList.remove('hidden');
+        burst(undefined, undefined, 100);
+        FX.confetti(150);
+        FX.heartRain(6000);
+        return;
+      }
+      const hrs = Math.floor(diff / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      const secs = Math.floor((diff % 60000) / 1000);
+      const hEl = $('#cd-hours');
+      const mEl = $('#cd-mins');
+      const sEl = $('#cd-secs');
+      if (hEl) hEl.textContent = String(hrs).padStart(2, '0');
+      if (mEl) mEl.textContent = String(mins).padStart(2, '0');
+      if (sEl) sEl.textContent = String(secs).padStart(2, '0');
+      setTimeout(update, 1000);
+    }
+    update();
+  }
+
+  // ── Enhancement: Love Days Counter ────────────────────────────────────────
+
+  function initLoveCounter() {
+    if (!config.relationshipStart) return;
+    const start = new Date(config.relationshipStart);
+    const now = new Date();
+    const days = Math.floor((now - start) / 86400000);
+    const el = $('#love-days');
+    if (!el) return;
+
+    // Animate counting up
+    let current = 0;
+    const step = Math.max(1, Math.floor(days / 60));
+    function tick() {
+      current = Math.min(current + step, days);
+      el.textContent = current.toLocaleString();
+      if (current < days) requestAnimationFrame(tick);
+    }
+    tick();
+  }
+
+  // ── Enhancement: Song Dedication Builder ──────────────────────────────────
+
+  function buildPlaylist() {
+    if (!config.playlist?.length) return;
+    const grid = $('#playlist-grid');
+    if (!grid) return;
+
+    config.playlist.forEach((song, i) => {
+      const card = document.createElement('div');
+      card.className = 'vinyl-card reveal';
+      card.style.setProperty('--card-color', song.color || '#ff9ab5');
+      card.style.transitionDelay = `${i * 0.12}s`;
+      card.innerHTML = `
+        <div class="vinyl-disc"></div>
+        <p class="vinyl-title">${song.title}</p>
+        <p class="vinyl-artist">${song.artist}</p>
+        <p class="vinyl-why">"${song.why}"</p>
+      `;
+      card.addEventListener('click', () => {
+        burst(undefined, undefined, 20);
+        toast(`🎵 ${song.title} — ${song.artist}`);
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  // ── Enhancement: Time Capsule Easter Egg ──────────────────────────────────
+
+  function initTimeCapsule() {
+    if (!config.timeCapsule) return;
+    const modal = $('#time-capsule');
+    if (!modal) return;
+
+    const msgEl = $('#capsule-message');
+    if (msgEl) msgEl.textContent = config.timeCapsule.message;
+
+    // Triple-tap on SIDWANI badge to open
+    const badge = document.querySelector('.sidwani-badge');
+    if (badge) {
+      let tapCount = 0;
+      let tapTimer = null;
+      badge.style.cursor = 'pointer';
+      badge.addEventListener('click', () => {
+        tapCount++;
+        clearTimeout(tapTimer);
+        if (tapCount >= 3) {
+          tapCount = 0;
+          openTimeCapsule();
+        }
+        tapTimer = setTimeout(() => { tapCount = 0; }, 800);
+      });
+    }
+
+    // Close handlers
+    const closeBtn = $('#close-capsule');
+    if (closeBtn) closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+
+    const sealBtn = $('#seal-capsule');
+    if (sealBtn) sealBtn.addEventListener('click', () => {
+      sealBtn.textContent = '✦ Sealed with love ✦';
+      sealBtn.classList.add('sealed');
+      burst(undefined, undefined, 50);
+      FX.confetti(80);
+      toast('Time capsule sealed — 18 Aug 2027 ko saath mein kholna ♡');
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.add('hidden');
+    });
+  }
+
+  function openTimeCapsule() {
+    const modal = $('#time-capsule');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    burst(undefined, undefined, 40);
+    toast('⏳ Time Capsule khul gaya!');
+  }
+
+  // ── Enhancement: 3D tilt classes ──────────────────────────────────────────
+
+  function applyTilt3D() {
+    const selectors = '.memory, .polaroid, .album-tile';
+    document.querySelectorAll(selectors).forEach((el) => {
+      el.classList.add('tilt-3d');
+    });
+  }
+
+  // ── Enhancement: Cinematic reveal classes ─────────────────────────────────
+
+  function applyCinematicReveals() {
+    const headers = document.querySelectorAll('.section-head');
+    headers.forEach((header, i) => {
+      if (header.classList.contains('reveal-left') || header.classList.contains('reveal-right')) return;
+      if (i % 2 === 0) {
+        header.classList.add('reveal-left');
+      } else {
+        header.classList.add('reveal-right');
+      }
+    });
+    document.querySelectorAll('.gift, .envelope, .heart-button').forEach((el) => {
+      el.classList.add('reveal-scale');
+    });
+  }
+
   function bindEvents() {
     $('#start-story').addEventListener('click', () => {
       tryStartMusic();
@@ -905,6 +1087,18 @@
       FX.heartRain(5000);
       location.hash = 'bond-reels';
     });
+
+    const seeMoreBtn = $('#see-more-photos');
+    if (seeMoreBtn) {
+      seeMoreBtn.addEventListener('click', () => {
+        const album = $('#photo-album');
+        if (album) album.classList.remove('collapsed');
+        const seeMoreWrap = $('#see-more-wrap');
+        if (seeMoreWrap) seeMoreWrap.classList.add('hidden');
+        burst(undefined, undefined, 40);
+        FX.confetti(60);
+      });
+    }
 
     $('#gift').addEventListener('click', () => {
       $('#gift').classList.add('open');
@@ -972,6 +1166,16 @@
     FX.initCursorSparkle();
     FX.initSectionGlow();
     FX.initParallax();
+
+    // ── New Enhancements ──
+    initCountdown();
+    initLoveCounter();
+    buildPlaylist();
+    initTimeCapsule();
+    applyCinematicReveals();
+    FX.initCinematicReveal();
+    FX.spawnFloatingHearts($('#floating-hearts'));
+    FX.spawnTwinkleStars($('#twinkle-stars'));
 
     const stars = $('#shooting-stars');
     FX.shootingStar(stars);

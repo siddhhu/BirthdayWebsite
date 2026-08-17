@@ -260,6 +260,73 @@ window.UniverseFX = (() => {
     }, 450);
   }
 
+  // ── Floating Hearts (persistent ambient) ──────────────────────────────────
+
+  function spawnFloatingHearts(container, count = 15) {
+    if (prefersReducedMotion() || !container) return;
+    const hearts = ['♡', '❤', '💕', '✦', '♥'];
+    for (let i = 0; i < count; i++) {
+      const h = document.createElement('span');
+      h.className = 'fh-heart';
+      h.textContent = hearts[i % hearts.length];
+      h.style.left = `${Math.random() * 100}%`;
+      h.style.fontSize = `${10 + Math.random() * 14}px`;
+      h.style.animationDuration = `${8 + Math.random() * 12}s`;
+      h.style.animationDelay = `${Math.random() * 10}s`;
+      h.style.color = COLORS[i % COLORS.length];
+      container.appendChild(h);
+    }
+  }
+
+  // ── Twinkling Stars ───────────────────────────────────────────────────────
+
+  function spawnTwinkleStars(container, count = 50) {
+    if (prefersReducedMotion() || !container) return;
+    const classes = ['', 'gold', 'pink', 'lav'];
+    for (let i = 0; i < count; i++) {
+      const star = document.createElement('span');
+      const cls = classes[Math.floor(Math.random() * classes.length)];
+      star.className = `twinkle-star${cls ? ' ' + cls : ''}${Math.random() > 0.85 ? ' large' : ''}`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.setProperty('--twinkle-dur', `${2 + Math.random() * 4}s`);
+      star.style.setProperty('--twinkle-delay', `${Math.random() * 5}s`);
+      container.appendChild(star);
+    }
+  }
+
+  // ── Enhanced Scroll Reveal (cinematic variants) ───────────────────────────
+
+  function initCinematicReveal() {
+    const variants = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-scale');
+    if (!variants.length) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+    variants.forEach((el) => observer.observe(el));
+  }
+
+  // ── 3D Tilt Effect ────────────────────────────────────────────────────────
+
+  function init3DTilt(selector = '.tilt-3d') {
+    if (prefersReducedMotion() || 'ontouchstart' in window) return;
+    document.querySelectorAll(selector).forEach((el) => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        el.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) scale(1.03)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = 'perspective(800px) rotateY(0) rotateX(0) scale(1)';
+      });
+    });
+  }
+
   return {
     burst,
     confetti,
@@ -277,6 +344,10 @@ window.UniverseFX = (() => {
     initSectionGlow,
     pulseElement,
     screenTransition,
-    prefersReducedMotion
+    prefersReducedMotion,
+    spawnFloatingHearts,
+    spawnTwinkleStars,
+    initCinematicReveal,
+    init3DTilt
   };
 })();

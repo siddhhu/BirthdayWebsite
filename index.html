@@ -14,8 +14,10 @@
 <body>
   <div class="aurora" aria-hidden="true"></div>
   <div class="stars" aria-hidden="true"></div>
+  <div id="twinkle-stars" class="twinkle-stars" aria-hidden="true"></div>
   <div id="shooting-stars" aria-hidden="true"></div>
   <div id="floating-quotes" class="floating-quotes" aria-hidden="true"></div>
+  <div id="floating-hearts" class="floating-hearts" aria-hidden="true"></div>
   <div id="ambient-gifs" class="ambient-gifs hidden" aria-hidden="true"></div>
   <div id="toast" class="toast" role="status"></div>
 
@@ -71,6 +73,17 @@
         <div id="landing-gif" class="landing-gif-wrap"></div>
       </div>
       <div class="landing-copy">
+        <div id="countdown" class="countdown-wrap">
+          <p class="countdown-label">Birthday tak bas...</p>
+          <div class="countdown-digits">
+            <div class="countdown-unit"><span id="cd-hours">00</span><small>hours</small></div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-unit"><span id="cd-mins">00</span><small>mins</small></div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-unit"><span id="cd-secs">00</span><small>secs</small></div>
+          </div>
+          <p id="countdown-birthday" class="countdown-birthday hidden">🎉 IT'S YOUR BIRTHDAY! 🎉</p>
+        </div>
         <p class="eyebrow" id="landing-eyebrow">18 August · hamara chhota sa universe</p>
         <div id="age-badge" class="age-badge"></div>
         <h1><span id="landing-title-before">Happy Birthday,</span><br/><em id="her-name">Shivani</em> ✨</h1>
@@ -96,6 +109,7 @@
   <main id="site" class="hidden">
     <button id="music-button" class="music" aria-label="Play music">
       <span class="music-icon">♪</span> <span class="music-label">gaana</span>
+      <span class="music-viz" id="music-viz"><i></i><i></i><i></i><i></i><i></i></span>
     </button>
 
     <nav class="nav" aria-label="Sections">
@@ -105,6 +119,7 @@
       <a href="#reasons" data-nav="reasons">Reasons</a>
       <a href="#bubu" data-nav="bubu">Bubu</a>
       <a href="#letter" data-nav="letter">Letter</a>
+      <a href="#playlist" data-nav="playlist">Playlist</a>
       <a href="#cake-section" data-nav="cake">Cake</a>
       <a href="#bond-reels" data-nav="bond">Bond</a>
       <a href="#final" data-nav="final">Surprise</a>
@@ -122,6 +137,11 @@
     <section id="home" class="hero section" data-section="home">
       <div class="hero-copy reveal">
         <p class="eyebrow">Tumhari raat ka aasman</p>
+        <div id="love-counter" class="love-counter">
+          <span class="love-counter-heart">💖</span>
+          <span id="love-days" class="love-days">0</span>
+          <span class="love-counter-text">din saath — aur counting ♡</span>
+        </div>
         <h1>Har star yahan<br/><em>tumhara naam</em> jaanta hai.</h1>
         <p>Dheere scroll karo, meri jaan. Maine apna dil har jagah chhupa ke rakha hai.</p>
         <a href="#story" class="btn ghost">Chalo shuru karein ↓</a>
@@ -164,7 +184,10 @@
       <div class="photo-album-wrap reveal">
         <p class="photo-album-intro">Hamari tasveerein — har ek mein ek cute si kahani hai 📸</p>
         <div id="photo-filters" class="photo-filters"></div>
-        <div id="photo-album" class="photo-album"></div>
+        <div id="photo-album" class="photo-album collapsed"></div>
+        <div class="see-more-wrap" id="see-more-wrap">
+          <button id="see-more-photos" class="btn gold">Saari photos dekho (80+ moments) 📸</button>
+        </div>
       </div>
 
       <div id="gif-memories" class="gif gif-gallery gif-float" data-float-range="11"></div>
@@ -230,6 +253,17 @@
       <div id="gif-promises" class="gif gif-promises gif-float" data-float-range="12"></div>
     </section>
 
+    <!-- Song Dedications -->
+    <section id="playlist" class="section playlist-section" data-section="playlist">
+      <header class="section-head section-head-center reveal">
+        <span>🎵</span>
+        <p class="eyebrow">Gaane jo dil se lagte hain</p>
+        <h2>Hamari chhoti si<br/><em>playlist.</em></h2>
+        <p>Har gaane mein ek yaad hai — tumhari aur meri.</p>
+      </header>
+      <div id="playlist-grid" class="playlist-grid"></div>
+    </section>
+
     <!-- Letter -->
     <section id="letter" class="section letter-section" data-section="letter">
       <header class="section-head reveal">
@@ -249,14 +283,14 @@
     <section id="cake-section" class="section cake-section" data-section="cake">
       <p class="eyebrow reveal">Birthday wish time</p>
       <h2 class="reveal">Cake ki candles<br/><em>bujha do na.</em></h2>
-      <p class="reveal">Mic automatically on hoga — cake ki taraf 5 baar phoonk maaro 🎤</p>
+      <p class="reveal">Mic automatically on hoga — cake ki taraf ek zor se phoonk maaro 🎤</p>
       <div id="gif-cake" class="gif gif-cake"></div>
       <div class="cake-stage reveal">
         <img src="assets/shivani-birthday-cake.png" alt="A birthday cake for Shivani"/>
         <span class="cake-label">Shivani</span>
         <div id="candles" class="candles" aria-label="Birthday candles"></div>
       </div>
-      <p id="cake-status" class="cake-status-hint reveal">0/5 candles bujhi — 5 baar phoonk maaro 🕯️</p>
+      <p id="cake-status" class="cake-status-hint reveal">Ek zor se phoonk maaro ya candle pe tap karo 🕯️</p>
       <button id="blow-mic-button" type="button" class="btn ghost blow-mic-btn reveal">🎤 Mic on — phoonk maaro</button>
       <p id="blow-mic-status" class="blow-mic-status reveal"></p>
       <button id="wish-button" class="btn gold" disabled>Wish maang lo ✦</button>
@@ -320,6 +354,18 @@
       <p id="birthday-popup-name" class="birthday-popup-name">Shivani ✨</p>
       <p id="birthday-popup-sub" class="birthday-popup-sub">Meri Booba — aaj poori duniya tumhari hai</p>
       <button id="close-celebration" type="button" class="btn gold">Yay! ♡</button>
+    </div>
+  </div>
+
+  <div id="time-capsule" class="time-capsule hidden" role="dialog" aria-modal="true">
+    <div class="time-capsule-card glass">
+      <button id="close-capsule" class="time-capsule-close" aria-label="Close">×</button>
+      <span class="time-capsule-icon">⏳</span>
+      <h2>Time Capsule</h2>
+      <p class="time-capsule-date">18 August 2027</p>
+      <p id="capsule-message" class="time-capsule-msg"></p>
+      <p class="time-capsule-footer">Ek saal baad is capsule ko khol ke padhe saath mein ♡</p>
+      <button id="seal-capsule" class="btn gold">Seal this capsule ✦</button>
     </div>
   </div>
 

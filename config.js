@@ -281,5 +281,40 @@ Tumhara Dudu ♡`,
 
   finalText: 'Tum meri sabse badi wish ho. Har naya din tumhare saath mera favourite surprise hai. Happy birthday meri pagli si Booba — SIDWANI, hamesha ke liye. ❤️',
 
-  giftUrl: ''
+  giftUrl: '',
+
+  relationshipStart: '2018-06-27',
+
+  playlist: [
+    {
+      title: 'Tum Ho',
+      artist: 'Mohit Chauhan',
+      why: 'Kyunki tum sach mein ho — meri har saans mein.',
+      color: '#ff9ab5'
+    },
+    {
+      title: 'Tera Ban Jaunga',
+      artist: 'Akhil Sachdeva & Tulsi Kumar',
+      why: 'Tumhare bina main kya hoon? Bas tumhara.',
+      color: '#bba8ff'
+    },
+    {
+      title: 'Raataan Lambiyan',
+      artist: 'Jubin Nautiyal & Asees Kaur',
+      why: 'Lambhi raatein tumhare saath — wahi sabse pyaari.',
+      color: '#f5cc83'
+    },
+    {
+      title: 'Pehla Nasha',
+      artist: 'Udit Narayan & Sadhana Sargam',
+      why: 'Pehla pyaar ka feeling — aaj bhi wahi hai.',
+      color: '#e47f99'
+    }
+  ],
+
+  timeCapsule: {
+    message: 'Dear future Bubu & Dudu — ek saal pehle yeh website banayi thi. Tab se kitna kuch badal gaya hoga, par ek cheez nahi badli — pyaar. Jab yeh padho 2027 mein, toh yaad rakhna ki 2026 mein bhi hum utne hi pagal the ek dusre ke liye. SIDWANI forever ♡',
+    sealDate: '18 August 2027',
+    sealed: false
+  }
 };
