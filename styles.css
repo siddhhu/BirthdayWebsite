@@ -2245,6 +2245,14 @@ input.shake { animation: shake .45s; }
   opacity: .75;
 }
 
+.success-wish {
+  max-width: 560px;
+  margin: 16px auto 28px;
+  padding: 0 20px;
+  font: italic 19px/1.55 var(--serif);
+  color: var(--pink);
+}
+
 /* ── Lightbox ─────────────────────────────────────────────────────────────── */
 
 .lightbox {

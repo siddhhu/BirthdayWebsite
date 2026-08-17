@@ -8,7 +8,7 @@ window.UNIVERSE_CONFIG = {
   passcode: '180627',
   lock2Code: 'sidwani',
   birthday: '2000-08-18',
-  subtitle: 'Maine sirf tumhare liye ek chhota sa universe banaya hai — andar jaao meri Booba, warning: yahan bahut zyada pyaar hai ♡',
+  subtitle: 'Maine sirf tere liye yeh chhota sa page banaya hai. Andar ja meri Booba — bas itna keh raha hoon, yahan bahut pyaar pada hai ♡',
 
   frontPage: {
     lock: {
@@ -34,7 +34,7 @@ window.UNIVERSE_CONFIG = {
       eyebrow: '18 August · hamara pyaara sa universe',
       titleBefore: 'Happy Birthday,',
       ageText: 'Aaj tum {age} ki ho rahi ho — haye, kitni jaldi badi ho gayi ✦',
-      teaser: 'Andar photos, secrets, ek dil se likha letter aur ek last wala surprise wait kar raha hai…',
+      teaser: 'Andar photos hain, kuch secrets, ek letter aur last mein ek surprise…',
       button: 'Chalo, kahani shuru karein',
       footnote: 'Headphones lagao warna feel adhoori reh jayegi 🎧',
       moonLabel: 'Chand pe tap karo — chhupa hua ek secret hai ✦'
@@ -44,18 +44,20 @@ window.UNIVERSE_CONFIG = {
       eyebrow: 'ek chhoti si shuruat',
       skip: 'Skip kar do (par mat karna 🥺)',
       lines: [
-        'Har khoobsurat kahani ka ek favourite chapter hota hai…',
-        'Mera favourite chapter? Woh jahan tum ho.',
-        'Aaj poora din sirf tumhara hai, meri pagli si Booba. ✨'
+        'Pata hai na… har kahani mein ek favourite part hota hai.',
+        'Mera favourite part? Jahan tu hai.',
+        'Aaj poora din tera hai meri pagli Booba. ✨'
       ]
     }
   },
 
   openingLines: [
-    'Har khoobsurat kahani ka ek favourite chapter hota hai…',
-    'Mera favourite chapter? Woh jahan tum ho.',
-    'Aaj poora din sirf tumhara hai, meri pagli si Booba. ✨'
+    'Pata hai na… har kahani mein ek favourite part hota hai.',
+    'Mera favourite part? Jahan tu hai.',
+    'Aaj poora din tera hai meri pagli Booba. ✨'
   ],
+
+  successWish: 'Jo bhi chahti hai life mein — sab mile. May you achieve everything you desire. Success, khushi, sab kuch. Main hamesha tere saath hoon ♡',
 
   music: { src: 'assets/music/tum_ho.mp3', title: 'Tum Ho' },
 
@@ -134,32 +136,32 @@ window.UNIVERSE_CONFIG = {
   ],
 
   promises: [
-    'Ordinary dinon pe bhi tumhare saath hasi guaranteed.',
-    'Har adventure mein haath pakad ke chalunga.',
-    'Chhoti chhoti yaadein yaad rakhunga — wahi sabse special hoti hain.',
-    'Baar baar tumhe choose karunga, har din, har pal.'
+    'Boring din pe bhi hasa dunga — pakka.',
+    'Kahi bhi jaye, haath pakad ke chalunga.',
+    'Chhoti baatein yaad rakhunga — wahi zyada matter karti hain.',
+    'Roz choose karunga tujhe. Boring lag raha hai par sach hai.'
   ],
 
   timeline: [
-    { date: 'Shuruat', title: 'Tuition wale din', text: 'Jahan sab shuru hua — ek simple si jagah jo tum aayi toh magic ban gayi.', emoji: '📚' },
-    { date: 'Pehli yaad', title: 'Upstairs wala pehla hug', text: 'Ek chhota sa pal… aur dil ne socha — yahi toh meri jagah hai.', emoji: '🤍' },
-    { date: 'Favourite safar', title: 'Banaras & Prayagraj', text: 'Gali, nadi, thandi hawa — sab kuch tumhare saath aur zyada pyaara laga.', emoji: '🛶' },
-    { date: 'Hamesha ke liye', title: 'SIDWANI', text: 'Hum dono ka naam. Mera sabse pyaara chhota sa universe.', emoji: '💌' },
-    { date: '18 August', title: "Booba ka din", text: 'Aaj poori duniya meri roshni ko celebrate karti hai — happy birthday, Shivani!', emoji: '🎂' }
+    { date: 'Shuruat', title: 'Tuition wale din', text: 'Yahi pe sab shuru hua tha. Simple si jagah thi — tu aayi toh sab badal gaya.', emoji: '📚' },
+    { date: 'Pehli yaad', title: 'Upstairs wala pehla hug', text: 'Chhota sa moment tha. Par dil ne tab hi soch liya — yahi meri jagah hai.', emoji: '🤍' },
+    { date: 'Favourite trip', title: 'Banaras & Prayagraj', text: 'Gali, nadi, thandi hawa — tere saath sab zyada achha lagta hai.', emoji: '🛶' },
+    { date: 'Forever wala', title: 'SIDWANI', text: 'Hum dono ka naam. Bas. Aur kuch nahi chahiye.', emoji: '💌' },
+    { date: '18 August', title: 'Tera din', text: 'Aaj tera birthday hai Shivani. Poori duniya celebrate kare — main toh pehle se celebrate kar raha tha.', emoji: '🎂' }
   ],
 
   lifeJourney: {
     image: 'assets/our-life-journey.png',
-    eyebrow: 'Poori zindagi ek frame mein',
-    title: 'Baby se leke budhape tak —<br/><em>hamesha tumhare saath.</em>',
-    hint: 'Har stage pe tap karo — thodi si kahani suno ♡',
+    eyebrow: 'ek hi photo mein',
+    title: 'Chhote hum se…<br/><em>budhe hum tak.</em>',
+    hint: 'Neeche dabao — har photo ke peeche kuch kehna tha',
     stages: [
-      { id: 'baby', label: 'Baby Pic', emoji: '👶', text: 'Shuru se hi lagta tha — yeh hum dono ke liye likha hai.' },
-      { id: 'marriage', label: 'After Marriage', emoji: '💍', text: 'SIDWANI official — meri zindagi, meri Booba, meri jaan.' },
-      { id: 'recent', label: 'Recent Pic', emoji: '✨', text: 'Aaj ka hum — tuition se leke ab tak, aur aage bhi saath.' },
-      { id: 'kids', label: 'With Kids', emoji: '👨‍👩‍👧‍👦', text: 'Future mein bhi wahi pyaar — chhoti si family, bada sa ghar.' },
-      { id: 'old', label: 'Old Age Pic', emoji: '🤍', text: 'Budhape mein bhi wahi haath pakad ke — hamesha ke liye.' },
-      { id: 'selfie', label: 'Old Age Selfie', emoji: '📸', text: 'Boorhe ho ke bhi cute selfies — kyunki pyaar kabhi budha nahi hota.' }
+      { id: 'baby', label: 'Baby Pic', emoji: '👶', text: 'Chhoti si photo hai. Par dekhte hi lagta hai — yeh hum dono ke liye likha tha.' },
+      { id: 'marriage', label: 'After Marriage', emoji: '💍', text: 'Shaadi wali wali feel. SIDWANI — bas yahi chahiye tha na.' },
+      { id: 'recent', label: 'Recent Pic', emoji: '✨', text: 'Yeh hum ab hain. Tuition yaad hai? Ab bhi wahi feel aati hai jab tu paas hoti hai.' },
+      { id: 'kids', label: 'With Kids', emoji: '👨‍👩‍👧‍👦', text: 'Future version — bacche, ghar, sab tere saath. Socha tha kabhi? Main bahut.' },
+      { id: 'old', label: 'Old Age Pic', emoji: '🤍', text: 'Budhe ho jayenge. Par haath chhodna nahi — deal?' },
+      { id: 'selfie', label: 'Old Age Selfie', emoji: '📸', text: 'Budhape mein bhi selfie lenge. Tu cute rahegi tab bhi, main pakka keh raha hoon.' }
     ]
   },
 
@@ -225,11 +227,11 @@ window.UNIVERSE_CONFIG = {
 
   // Bond reels — videos in assets/videos/reel-1.mp4, reel-2.mp4, reel-3.mp4
   bondReels: {
-    eyebrow: 'Hamara bond 🎬',
-    title: 'Teen reels, ek rishta.',
-    hint: 'Humari kahani — jo hum ho chuke hain aur jo hum ab bhi likh rahe hain, roz tumhare saath.',
-    footnote: 'SIDWANI — yeh sirf naam nahi, hamara bond hai ♡',
-    videoPlaceholder: 'Reel add karo — assets/videos/ folder mein',
+    eyebrow: 'Hamare reels 🎬',
+    title: 'Teen videos, ek bond.',
+    hint: 'Jo ho chuke hain hum — aur jo ab bhi likh rahe hain. Roz tere saath.',
+    footnote: 'SIDWANI — naam nahi, hum hain ♡',
+    videoPlaceholder: 'Reel yahan aayegi',
     reels: [
       {
         id: 'reel-1',
@@ -237,7 +239,7 @@ window.UNIVERSE_CONFIG = {
         emoji: '♡',
         video: 'assets/videos/reel-1.mp4',
         title: 'Ab tak ka hum',
-        text: 'Tuition se leke Banaras tak — har pal jahan hum thode aur apne ho gaye. Yeh reel usi bond ke baare mein hai.'
+        text: 'Tuition se Banaras tak — jahan bhi gaye, thode aur apne ho gaye.'
       },
       {
         id: 'reel-2',
@@ -245,25 +247,25 @@ window.UNIVERSE_CONFIG = {
         emoji: '✦',
         video: 'assets/videos/reel-2.mp4',
         title: 'Jo hum ban gaye',
-        text: 'Har reel ek chapter hai — hasi, masti, aur woh chhoti chhoti baatein jo sirf hum samajhte hain.'
+        text: 'Hasi, masti, aur woh baatein jo sirf hum samajhte hain.'
       },
       {
         id: 'reel-3',
         label: 'Aaj ka hum',
         emoji: '🎬',
         video: 'assets/videos/reel-3.mp4',
-        title: 'Latest reel',
-        text: 'Sabse nayi reel — kyunki hamari kahani roz nayi lines likhti rehti hai. Tumhare saath, hamesha.'
+        title: 'Nayi reel',
+        text: 'Abhi ki reel — kyunki kahani ab bhi chal rahi hai. Tere saath.'
       }
     ]
   },
 
   reasons: [
-    'Tum ordinary din ko bhi special bana deti ho — sach mein.',
-    'Tumhari smile se mera poora mood flip ho jata hai.',
-    'Main kam bolun tab bhi tum samajh jaati ho — yeh alag hi baat hai.',
-    'Jahan bhi jaati ho, wahan garmahat le ke jaati ho.',
-    'Tum bilkul apne jaisi ho — aur wahi sabse pyaari baat hai.'
+    'Tu normal din ko bhi special bana deti hai — sach mein.',
+    'Teri smile se mera mood flip ho jata hai.',
+    'Main kam bolun tab bhi tu samajh jaati hai.',
+    'Jahan bhi jaati hai, wahan garmahat le ke jaati hai.',
+    'Tu bilkul apne jaisi hai — aur wahi sabse achhi baat hai.'
   ],
 
   secrets: [
@@ -286,15 +288,17 @@ window.UNIVERSE_CONFIG = {
 
   letter: `Happy birthday meri jaan.
 
-Tum meri zindagi ko aise khubsurat banati ho jo main shabdon mein poora nahi bata sakta. Tumhari patience, tumhari hasi, tumhara pyaar — sab kuch mere liye bahut matter karta hai.
+Sach bolun — itna achha message likhna mushkil hai. Par try kar raha hoon.
 
-Is saal tum apne saare sapne aur paas aao. Jo yaadein humne banayi hain unke liye main hamesha grateful rahunga, aur jo aage baaki hai uske liye main bahut excited hoon.
+Tu jo bhi chahti hai life mein — sab mile. May you achieve everything you desire. Success, sapne, khushi — sab kuch. Main hamesha root karunga, hamesha saath rahunga.
 
-Main tumse bahut zyada pyaar karta hoon — itna zyada ki words kam pad jaate hain.
+Tuition se leke aaj tak — har din thoda aur proud feel karta hoon tujhpe.
 
-Tumhara Dudu ♡`,
+Bahut pyaar karta hoon. Like, bahut zyada.
 
-  finalText: 'Tum meri sabse badi wish ho. Har naya din tumhare saath mera favourite surprise hai. Happy birthday meri pagli si Booba — SIDWANI, hamesha ke liye. ❤️',
+Tera Dudu ♡`,
+
+  finalText: 'Tu meri sabse badi wish hai. Jo bhi chahti hai — sab achieve kar. Success, khushi, sab mile. Happy birthday meri pagli Booba — SIDWANI, hamesha. ❤️',
 
   giftUrl: '',
 
@@ -305,13 +309,13 @@ Tumhara Dudu ♡`,
     frequency: '18.08 ♡',
     track: 'Tum Ho',
     dedications: [
-      'Kyunki tum sach mein ho — meri har saans mein.',
-      'Tuition ki kursi se Banaras ki gali tak — har kadam tumhare saath.',
-      'Tumhare bina yeh gaana adhoora, tumhare saath poora universe.',
-      'Raat lambi ho ya din chhota — tum ho toh sab theek lagta hai.',
-      'Pehla pyaar wali feeling? Ab bhi tumhe dekhte hi wahi hota hai.',
-      'Booba + Dudu = SIDWANI. Bas. Khatam. Argument over.',
-      'Yeh sirf gaana nahi — meri tumhari kahani ka background score hai.'
+      'Kyunki tu sach mein hai — meri life mein.',
+      'Tuition ki kursi se Banaras ki gali — har jagah tu thi.',
+      'Tere bina yeh gaana adhoora lagta hai.',
+      'Raat lambi ho ya din chhota — tu ho toh theek lagta hai.',
+      'Pehli baar jaisa feel? Ab bhi hota hai jab tu saamne hoti hai.',
+      'Booba + Dudu = SIDWANI. Bas. Done.',
+      'Yeh gaana sirf gaana nahi — humari kahani hai thodi si.'
     ]
   },
 

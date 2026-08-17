@@ -334,7 +334,7 @@
     if (!br) return;
 
     $('#bond-reels-eyebrow').textContent = br.eyebrow;
-    $('#bond-reels-title').innerHTML = br.title.replace('rishta.', '<em>rishta.</em>');
+    $('#bond-reels-title').innerHTML = br.title.replace('bond.', '<em>bond.</em>');
     $('#bond-reels-hint').textContent = br.hint;
     $('#bond-reels-footnote').textContent = br.footnote;
 
@@ -490,7 +490,7 @@
     state.celebrationShown = true;
     const overlay = $('#birthday-celebration');
     $('#birthday-popup-name').textContent = `${config.herName} ✨`;
-    $('#birthday-popup-sub').textContent = `Meri ${config.nickname} — aaj poori duniya tumhari hai`;
+    $('#birthday-popup-sub').textContent = config.successWish || `Meri ${config.nickname} — happy birthday ♡`;
     spawnBalloons();
     overlay.classList.remove('hidden');
     burst(undefined, undefined, 100);
@@ -959,7 +959,7 @@
     if (!journey?.image) return;
 
     $('#journey-eyebrow').textContent = journey.eyebrow;
-    $('#journey-title').innerHTML = journey.title.replace('hamesha tumhare saath.', '<em>hamesha tumhare saath.</em>');
+    $('#journey-title').innerHTML = journey.title.replace('budhe hum tak.', '<em>budhe hum tak.</em>');
     $('#journey-hint').textContent = journey.hint;
 
     const img = $('#journey-image');
@@ -1287,6 +1287,8 @@
     populateFrontPage(calcAge(config.birthday));
     buildLandingTags();
     $('#final-text').textContent = config.finalText;
+    const wishEl = $('#success-wish');
+    if (wishEl && config.successWish) wishEl.textContent = config.successWish;
     $('#secret-count').textContent = `${state.secrets.size} mein se ${SECRET_COUNT} secrets mile`;
 
     buildPhotoCatalog();
