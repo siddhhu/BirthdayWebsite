@@ -150,7 +150,7 @@ window.UNIVERSE_CONFIG = {
 
   // ── Photos (all from assets/photos/website/ — no duplicates across sections) ──
   photoFiles: [
-    'IMG_0001','IMG_0002','IMG_0003','IMG_0004','IMG_0005','IMG_0006','IMG_0007','IMG_0008','IMG_0009',
+    'IMG_0001','IMG_0002','IMG_0003','IMG_0004','IMG_0005','IMG_0006','IMG_0008','IMG_0009',
     'IMG_0010','IMG_0011','IMG_0012','IMG_0013','IMG_0014','IMG_0015','IMG_0016','IMG_0017','IMG_0018','IMG_0019',
     'IMG_0020','IMG_0021','IMG_0022','IMG_0023','IMG_0024','IMG_0025','IMG_0026','IMG_0027','IMG_0028','IMG_0029',
     'IMG_0030','IMG_0031','IMG_0032','IMG_0034','IMG_0035','IMG_0036','IMG_0037','IMG_0038','IMG_0039',
@@ -167,7 +167,6 @@ window.UNIVERSE_CONFIG = {
     IMG_0003: { caption: 'Cycle pe, saath mein', sub: 'Chhoti si ride, badi yaadein', cat: 'us' },
     IMG_0005: { caption: 'Gaal pe kiss — dil pe asar', sub: 'Pyaar jo shabdon se zyada kehta hai', cat: 'us' },
     IMG_0006: { caption: 'Door ho ke bhi paas', sub: 'Earphones on, dil connected', cat: 'us' },
-    IMG_0007: { caption: 'Rangon wali mohabbat', sub: 'Holi vibes & heart eyes', cat: 'us' },
     IMG_0008: { caption: 'Paani mein masti', sub: 'Prayagraj yaadein — hasi aur saath', cat: 'moments' },
     IMG_0010: { caption: 'Beanie wali cute selfie', sub: 'Saath mein, hamesha warm', cat: 'us' },
     IMG_0012: { caption: 'Believe in yourself, Booba', sub: 'Main already believe karta hoon', cat: 'booba' },
@@ -197,8 +196,8 @@ window.UNIVERSE_CONFIG = {
   memoryPhotoIds: ['IMG_0090','IMG_0005','IMG_0085','IMG_0008','IMG_0030','IMG_0038','IMG_0080','IMG_0048'],
   memoryTones: ['pink','purple','gold','blue','pink','purple','gold','blue'],
 
-  polaroidPhotoIds: ['IMG_0050','IMG_0040','IMG_0010','IMG_0035','IMG_0020','IMG_0007'],
-  polaroidSubs: ['Hum dono — SIDWANI ♡','Dil bhara pyaar','Garmahat wali selfie','Saree mein chamak hi chamak','Party queen Booba','Holi ke rang, dil ke sang'],
+  polaroidPhotoIds: ['IMG_0050','IMG_0040','IMG_0010','IMG_0035','IMG_0020','IMG_0030'],
+  polaroidSubs: ['Hum dono — SIDWANI ♡','Dil bhara pyaar','Garmahat wali selfie','Saree mein chamak hi chamak','Party queen Booba','Cake cutting queen 🎂'],
 
   photoFilters: [
     { id: 'all', label: 'Sab kuch ✦' },

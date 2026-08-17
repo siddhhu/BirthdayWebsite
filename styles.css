@@ -13,7 +13,11 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
 
 body {
   margin: 0;
@@ -21,6 +25,9 @@ body {
   color: var(--ink);
   font-family: var(--sans);
   overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100%;
+  touch-action: pan-y;
 }
 
 .hidden { display: none !important; }
@@ -594,10 +601,20 @@ input.shake { animation: shake .45s; }
   position: relative;
   min-height: 100svh;
   padding: 125px max(8vw, 24px) 80px;
-  display: grid;
-  place-content: center;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  overflow-x: clip;
+  overflow-y: visible;
   isolation: isolate;
+}
+
+.memories {
+  min-height: auto;
+  justify-content: flex-start;
+  padding-bottom: 120px;
+  background: linear-gradient(145deg, #2a1734, #14213c);
 }
 
 .section > * { z-index: 1; }
@@ -1017,8 +1034,6 @@ input.shake { animation: shake .45s; }
 .moment.open p { display: block; }
 
 /* ── Memories ─────────────────────────────────────────────────────────────── */
-
-.memories { background: linear-gradient(145deg, #2a1734, #14213c); }
 
 .gallery {
   width: min(850px, 100%);
@@ -1595,6 +1610,13 @@ input.shake { animation: shake .45s; }
   color: #c9b8d4;
   min-height: 18px;
   margin-bottom: 10px;
+}
+
+.cake-status-hint {
+  font-size: 13px;
+  min-height: 20px;
+  color: var(--gold);
+  margin: 12px auto 6px;
 }
 
 @keyframes micPulse {
@@ -2332,6 +2354,7 @@ input.shake { animation: shake .45s; }
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
     scrollbar-width: none;
     padding: 4px 2px;
   }

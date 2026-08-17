@@ -18,7 +18,8 @@
     albumPhotos: [],
     musicStarted: false,
     celebrationShown: false,
-    blowMic: null
+    blowMic: null,
+    micAutoRequested: false
   };
 
   const PHOTO_DEFAULTS = [
@@ -446,6 +447,18 @@
       candle.addEventListener('click', () => extinguishCandle(candle));
       $('#candles').append(candle);
     });
+    updateCakeStatus();
+  }
+
+  function updateCakeStatus() {
+    const total = 5;
+    const out = $$('.candle.out').length;
+    const status = $('#cake-status');
+    if (out >= total) {
+      status.textContent = `Saari 5 candles bujh gayi! Ab wish maang lo, ${config.nickname || config.herName} ✦`;
+    } else {
+      status.textContent = `${out}/${total} candles bujhi — ${total - out} aur baaki. 5 baar phoonk maaro 🕯️`;
+    }
   }
 
   function extinguishCandle(candle) {
@@ -453,6 +466,7 @@
     candle.classList.add('out');
     candle.disabled = true;
     burst(undefined, undefined, 12);
+    updateCakeStatus();
     checkAllCandlesOut();
     return true;
   }
@@ -460,7 +474,6 @@
   function checkAllCandlesOut() {
     if ($$('.candle.out').length < 5) return;
     $('#wish-button').disabled = false;
-    $('#cake-status').textContent = `Saari candles bujh gayi! Ab wish maang lo, ${config.nickname || config.herName} ✦`;
     stopBlowMic();
     if (!state.celebrationShown) showBirthdayCelebration();
   }
@@ -522,10 +535,17 @@
     const status = $('#blow-mic-status');
     const btn = $('#blow-mic-button');
 
+    if (state.blowMic?.active || state.blowMicStarting) return;
+    if ($$('.candle.out').length >= 5) return;
+
     if (!navigator.mediaDevices?.getUserMedia) {
       status.textContent = 'Is browser mein mic support nahi hai — candle pe tap karo';
       return;
     }
+
+    state.blowMicStarting = true;
+    btn.textContent = '🎤 Mic on ho raha hai…';
+    status.textContent = 'Allow karo mic permission — phir 5 baar phoonk maaro 🎂';
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -546,7 +566,7 @@
 
       btn.textContent = '🎤 Listening… phoonk maaro!';
       btn.classList.add('listening');
-      status.textContent = 'Mic on hai — cake ki taraf phoonk maaro 🎂';
+      status.textContent = 'Mic on hai — 5 baar phoonk maaro, har blow ek candle bujhayegi 🎂';
 
       const detect = () => {
         if (!state.blowMic?.active) return;
@@ -579,10 +599,14 @@
       };
 
       detect();
+      state.micAutoRequested = true;
     } catch {
-      status.textContent = 'Mic permission nahi mili — candle pe tap karke bujha sakti ho';
+      status.textContent = 'Mic allow nahi hui — phir se dabao ya candle pe tap karo';
       btn.textContent = '🎤 Mic on karo — phoonk maaro';
       btn.classList.remove('listening');
+      state.micAutoRequested = false;
+    } finally {
+      state.blowMicStarting = false;
     }
   }
 
@@ -601,7 +625,8 @@
       if (state.blowMic?.active) {
         stopBlowMic();
         $('#blow-mic-button').textContent = '🎤 Mic on karo — phoonk maaro';
-        $('#blow-mic-status').textContent = 'Mic band ho gayi';
+        $('#blow-mic-status').textContent = 'Mic band — phir se on karne ke liye dabao';
+        state.micAutoRequested = false;
         return;
       }
       if ($$('.candle.out').length >= 5) return;
@@ -610,6 +635,33 @@
 
     $('#close-celebration').addEventListener('click', () => {
       $('#birthday-celebration').classList.add('hidden');
+    });
+  }
+
+  function bindCakeMicAuto() {
+    const section = $('#cake-section');
+    if (!section) return;
+
+    const requestMic = () => {
+      if (state.blowMic?.active || state.blowMicStarting || $$('.candle.out').length >= 5) return;
+      startBlowMic();
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        requestMic();
+        observer.unobserve(section);
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(section);
+
+    const cakeNav = $('a[href="#cake-section"]');
+    if (cakeNav) cakeNav.addEventListener('click', requestMic);
+
+    section.addEventListener('click', () => {
+      if (!state.blowMic?.active && $$('.candle.out').length < 5) requestMic();
     });
   }
 
@@ -913,6 +965,7 @@
     bindNavSpy();
     bindMusic();
     bindBlowMic();
+    bindCakeMicAuto();
     updateLoveMeter();
     spawnFloatingQuotes();
 
