@@ -16,7 +16,9 @@
     typeTimer: null,
     photos: [],
     albumPhotos: [],
-    giftOpened: new Set()
+    musicStarted: false,
+    celebrationShown: false,
+    blowMic: null
   };
 
   const PHOTO_DEFAULTS = [
@@ -33,15 +35,42 @@
   ];
   const PHOTO_CATS = ['moments', 'booba', 'us', 'desi', 'celebration'];
 
+  /** Resolve asset paths correctly on Render, GitHub Pages subpaths, and local open */
+  function assetUrl(relativePath) {
+    try {
+      return new URL(relativePath, document.baseURI).href;
+    } catch {
+      return relativePath;
+    }
+  }
+
+  function photoPath(id) {
+    return assetUrl(`assets/photos/website/${id}.jpg`);
+  }
+
+  function createPhotoImg(photo, index, { eagerLimit = 24 } = {}) {
+    const img = document.createElement('img');
+    img.alt = photo.caption;
+    img.decoding = 'async';
+    img.loading = index < eagerLimit ? 'eager' : 'lazy';
+    img.src = photo.image;
+    img.addEventListener('error', () => {
+      const fallback = assetUrl(`assets/photos/website/${photo.id}.jpg`);
+      if (img.src !== fallback) img.src = fallback;
+    }, { once: true });
+    return img;
+  }
+
   function buildPhotoCatalog() {
     const used = new Set([...config.memoryPhotoIds, ...config.polaroidPhotoIds]);
     state.photos = config.photoFiles.map((id, i) => {
       const meta = config.photoMeta[id];
-      if (meta) return { id, image: `assets/photos/website/${id}.jpg`, ...meta };
+      const image = photoPath(id);
+      if (meta) return { id, image, ...meta };
       const fallback = PHOTO_DEFAULTS[i % PHOTO_DEFAULTS.length];
       return {
         id,
-        image: `assets/photos/website/${id}.jpg`,
+        image,
         caption: fallback.caption,
         sub: fallback.sub,
         cat: PHOTO_CATS[i % PHOTO_CATS.length]
@@ -195,7 +224,10 @@
       card.style.setProperty('--b', b);
       card.style.setProperty('--r', `${i % 2 ? 2.5 : -2.5}deg`);
       card.style.transitionDelay = `${i * 0.1}s`;
-      card.innerHTML = `<img loading="lazy" src="${photo.image}" alt="${photo.caption}"><b>${photo.caption}</b>`;
+      const img = createPhotoImg(photo, i, { eagerLimit: 8 });
+      const label = document.createElement('b');
+      label.textContent = photo.caption;
+      card.append(img, label);
       card.addEventListener('click', () => openLightbox(albumIndexForPhotoId(photoId)));
       $('#gallery').append(card);
     });
@@ -208,19 +240,20 @@
     config.polaroidPhotoIds.forEach((photoId, i) => {
       const photo = photoById(photoId);
       if (!photo) return;
-      const sub = config.polaroidSubs[i] || photo.sub;
+      const subText = config.polaroidSubs[i] || photo.sub;
       const polaroid = document.createElement('button');
       polaroid.type = 'button';
       polaroid.className = 'polaroid reveal';
       polaroid.style.transitionDelay = `${i * 0.15}s`;
       polaroid.style.setProperty('--r', `${i === 1 ? 0 : i === 0 ? -3 : 3}deg`);
-      polaroid.innerHTML = `
-        <img loading="lazy" src="${photo.image}" alt="${photo.caption}"/>
-        <figcaption>
-          <b>${photo.caption}</b>
-          <small>${sub}</small>
-        </figcaption>
-      `;
+      const img = createPhotoImg(photo, i, { eagerLimit: 6 });
+      const caption = document.createElement('figcaption');
+      const title = document.createElement('b');
+      title.textContent = photo.caption;
+      const subEl = document.createElement('small');
+      subEl.textContent = subText;
+      caption.append(title, subEl);
+      polaroid.append(img, caption);
       polaroid.addEventListener('click', () => {
         openLightbox(albumIndexForPhotoId(photoId));
         burst(undefined, undefined, 25);
@@ -267,16 +300,20 @@
     state.albumPhotos.forEach((photo, i) => {
       const tile = document.createElement('button');
       tile.type = 'button';
-      tile.className = 'album-tile reveal';
+      tile.className = 'album-tile';
       tile.dataset.cat = photo.cat;
-      tile.style.transitionDelay = `${(i % 12) * 0.05}s`;
-      tile.innerHTML = `
-        <img loading="lazy" src="${photo.image}" alt="${photo.caption}"/>
-        <span class="album-caption">
-          <b>${photo.caption}</b>
-          <small>${photo.sub || ''}</small>
-        </span>
-      `;
+      tile.style.animationDelay = `${(i % 12) * 0.05}s`;
+
+      const img = createPhotoImg(photo, i, { eagerLimit: 24 });
+      const captionWrap = document.createElement('span');
+      captionWrap.className = 'album-caption';
+      const title = document.createElement('b');
+      title.textContent = photo.caption;
+      const sub = document.createElement('small');
+      sub.textContent = photo.sub || '';
+      captionWrap.append(title, sub);
+      tile.append(img, captionWrap);
+
       tile.addEventListener('click', () => {
         openLightbox(albumIndexForPhotoId(photo.id));
         burst(undefined, undefined, 20);
@@ -285,89 +322,63 @@
     });
   }
 
-  function buildGiftGuess() {
-    const gg = config.giftGuess;
-    if (!gg) return;
+  function buildBondReels() {
+    const br = config.bondReels;
+    if (!br) return;
 
-    $('#gift-guess-eyebrow').textContent = gg.eyebrow;
-    $('#gift-guess-title').innerHTML = gg.title.replace('asli reel', '<em>asli reel</em>');
-    $('#gift-guess-hint').textContent = gg.hint;
-    $('#gift-guess-prompt').textContent = gg.pickPrompt;
+    $('#bond-reels-eyebrow').textContent = br.eyebrow;
+    $('#bond-reels-title').innerHTML = br.title.replace('rishta.', '<em>rishta.</em>');
+    $('#bond-reels-hint').textContent = br.hint;
+    $('#bond-reels-footnote').textContent = br.footnote;
 
-    const shuffled = [...gg.boxes].sort(() => Math.random() - 0.5);
-    const container = $('#gift-boxes');
-    container.innerHTML = '';
+    const grid = $('#bond-reel-grid');
+    grid.innerHTML = '';
 
-    shuffled.forEach((box, i) => {
-      const el = document.createElement('button');
-      el.type = 'button';
-      el.className = 'gift-box reveal';
-      el.dataset.boxId = box.id;
-      el.style.transitionDelay = `${i * 0.12}s`;
-      el.innerHTML = `
-        <span class="gift-box-lid" aria-hidden="true"></span>
-        <span class="gift-box-body">
-          <span class="gift-box-emoji">${box.emoji}</span>
-          <span class="gift-box-label">${box.label}</span>
-          <span class="gift-box-cta">${gg.reelCta || 'Reel chalao →'}</span>
-        </span>
-      `;
-      el.addEventListener('click', () => openGiftBox(box, el));
-      container.append(el);
-    });
-  }
+    br.reels.forEach((reel, i) => {
+      const card = document.createElement('article');
+      card.className = 'bond-reel-card reveal';
+      card.style.transitionDelay = `${i * 0.15}s`;
 
-  function openGiftBox(box, el) {
-    if (state.giftOpened.has(box.id)) return;
+      const badge = document.createElement('span');
+      badge.className = 'bond-reel-badge';
+      badge.textContent = `${reel.emoji} ${reel.label}`;
 
-    state.giftOpened.add(box.id);
-    el.classList.add('opened');
-    el.disabled = true;
+      const frame = document.createElement('div');
+      frame.className = 'bond-reel-frame';
 
-    const gg = config.giftGuess;
-    const reveal = $('#gift-reveal');
-    const video = $('#gift-video');
-    const placeholder = $('#gift-video-placeholder');
+      const video = document.createElement('video');
+      video.className = 'bond-reel-video';
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = 'metadata';
+      video.src = assetUrl(reel.video);
 
-    reveal.classList.remove('hidden');
-    $('#gift-reveal-title').textContent = box.revealTitle;
-    $('#gift-reveal-text').textContent = box.revealText;
-    reveal.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const placeholder = document.createElement('p');
+      placeholder.className = 'bond-reel-placeholder hidden';
+      placeholder.textContent = `${br.videoPlaceholder}: ${reel.video}`;
 
-    if (box.video) {
-      video.src = box.video;
-      video.classList.remove('hidden');
-      placeholder.classList.add('hidden');
-      video.onerror = () => {
+      video.addEventListener('error', () => {
         video.classList.add('hidden');
         placeholder.classList.remove('hidden');
-        placeholder.textContent = `${gg.videoPlaceholder || 'Reel add karo'}: ${box.video}`;
-      };
-      video.load();
-    } else {
-      video.classList.add('hidden');
-      placeholder.classList.remove('hidden');
-    }
+      }, { once: true });
 
-    if (box.isReal) {
-      toast(gg.rightPick);
-      burst(undefined, undefined, 90);
-      FX.confetti(120);
-      FX.heartRain(5000);
-      $('#gift-guess-status').textContent = gg.rightPick;
-    } else {
-      toast(gg.wrongPick);
-      burst(undefined, undefined, 30);
-      $('#gift-guess-status').textContent = gg.wrongPick;
-    }
+      video.addEventListener('play', () => {
+        burst(undefined, undefined, 20);
+      });
 
-    if (state.giftOpened.size === gg.boxes.length) {
-      setTimeout(() => {
-        $('#gift-guess-status').textContent = gg.bothOpened;
-        toast(gg.bothOpened);
-        FX.confetti(80);
-      }, 1200);
-    }
+      frame.append(video, placeholder);
+
+      const copy = document.createElement('div');
+      copy.className = 'bond-reel-copy';
+      const title = document.createElement('h3');
+      title.textContent = reel.title;
+      const text = document.createElement('p');
+      text.textContent = reel.text;
+      copy.append(title, text);
+
+      card.append(badge, frame, copy);
+      grid.append(card);
+    });
   }
 
   function buildReasons() {
@@ -427,21 +438,178 @@
   function buildCandles() {
     [22, 42, 62, 82, 102].forEach((x, i) => {
       const candle = document.createElement('button');
+      candle.type = 'button';
       candle.className = 'candle';
       candle.style.left = `${x}%`;
       candle.style.top = `${i % 2 ? 45 : 34}px`;
       candle.setAttribute('aria-label', `Blow out candle ${i + 1}`);
-      candle.addEventListener('click', () => {
-        if (candle.classList.contains('out')) return;
-        candle.classList.add('out');
-        candle.disabled = true;
-        burst(undefined, undefined, 12);
-        if ($$('.candle.out').length === 5) {
-          $('#wish-button').disabled = false;
-          $('#cake-status').textContent = `Saari candles bujh gayi! Ab wish maang lo, ${config.nickname || config.herName} ✦`;
-        }
-      });
+      candle.addEventListener('click', () => extinguishCandle(candle));
       $('#candles').append(candle);
+    });
+  }
+
+  function extinguishCandle(candle) {
+    if (!candle || candle.classList.contains('out')) return false;
+    candle.classList.add('out');
+    candle.disabled = true;
+    burst(undefined, undefined, 12);
+    checkAllCandlesOut();
+    return true;
+  }
+
+  function checkAllCandlesOut() {
+    if ($$('.candle.out').length < 5) return;
+    $('#wish-button').disabled = false;
+    $('#cake-status').textContent = `Saari candles bujh gayi! Ab wish maang lo, ${config.nickname || config.herName} ✦`;
+    stopBlowMic();
+    if (!state.celebrationShown) showBirthdayCelebration();
+  }
+
+  function showBirthdayCelebration() {
+    state.celebrationShown = true;
+    const overlay = $('#birthday-celebration');
+    $('#birthday-popup-name').textContent = `${config.herName} ✨`;
+    $('#birthday-popup-sub').textContent = `Meri ${config.nickname} — aaj poori duniya tumhari hai`;
+    spawnBalloons();
+    overlay.classList.remove('hidden');
+    burst(undefined, undefined, 100);
+    FX.confetti(140);
+    FX.heartRain(5000);
+  }
+
+  function spawnBalloons() {
+    const field = $('#balloon-field');
+    field.innerHTML = '';
+    for (let i = 0; i < 20; i++) {
+      const balloon = document.createElement('span');
+      balloon.className = 'balloon';
+      balloon.textContent = '🎈';
+      balloon.style.left = `${4 + Math.random() * 92}%`;
+      balloon.style.animationDelay = `${Math.random() * 2.5}s`;
+      balloon.style.animationDuration = `${4 + Math.random() * 4}s`;
+      balloon.style.fontSize = `${20 + Math.random() * 22}px`;
+      field.append(balloon);
+    }
+  }
+
+  function tryStartMusic() {
+    if (!config.music.src || state.musicStarted) return;
+    const audio = $('#audio');
+    if (!audio.src) return;
+    audio.play().then(() => {
+      state.musicStarted = true;
+    }).catch(() => {});
+  }
+
+  function bindMusic() {
+    const audio = $('#audio');
+    if (config.music.src) {
+      audio.src = assetUrl(config.music.src);
+    }
+    audio.onerror = () => { $('#music-button').title = 'Music file load nahi hui'; };
+    audio.addEventListener('play', () => {
+      state.musicStarted = true;
+      $('#music-button').classList.add('playing');
+    });
+    audio.addEventListener('pause', () => $('#music-button').classList.remove('playing'));
+    $('#music-button').addEventListener('click', () => {
+      if (!config.music.src) { toast('Music file missing hai 🎵'); return; }
+      audio.paused ? audio.play().catch(() => toast('Phir se tap karo music ke liye.')) : audio.pause();
+    });
+  }
+
+  async function startBlowMic() {
+    const status = $('#blow-mic-status');
+    const btn = $('#blow-mic-button');
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      status.textContent = 'Is browser mein mic support nahi hai — candle pe tap karo';
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const ctx = new AudioContext();
+      if (ctx.state === 'suspended') await ctx.resume();
+      const source = ctx.createMediaStreamSource(stream);
+      const analyser = ctx.createAnalyser();
+      analyser.fftSize = 2048;
+      analyser.smoothingTimeConstant = 0.3;
+      source.connect(analyser);
+
+      const timeData = new Uint8Array(analyser.fftSize);
+      let lastBlow = 0;
+      let baseline = 0.02;
+      let calibrating = 30;
+
+      state.blowMic = { stream, ctx, analyser, timeData, active: true };
+
+      btn.textContent = '🎤 Listening… phoonk maaro!';
+      btn.classList.add('listening');
+      status.textContent = 'Mic on hai — cake ki taraf phoonk maaro 🎂';
+
+      const detect = () => {
+        if (!state.blowMic?.active) return;
+        analyser.getByteTimeDomainData(timeData);
+        let sum = 0;
+        for (let i = 0; i < timeData.length; i++) {
+          const v = (timeData[i] - 128) / 128;
+          sum += v * v;
+        }
+        const rms = Math.sqrt(sum / timeData.length);
+
+        if (calibrating > 0) {
+          baseline = baseline * 0.9 + rms * 0.1;
+          calibrating--;
+        } else {
+          const threshold = Math.max(0.12, baseline * 3.5);
+          const now = Date.now();
+          if (rms > threshold && now - lastBlow > 700) {
+            lastBlow = now;
+            const next = $$('.candle:not(.out)')[0];
+            if (next) {
+              extinguishCandle(next);
+              status.textContent = 'Wah! Ek aur candle bujhi 🕯️';
+            }
+          }
+          baseline = baseline * 0.985 + rms * 0.015;
+        }
+
+        state.blowMic.rafId = requestAnimationFrame(detect);
+      };
+
+      detect();
+    } catch {
+      status.textContent = 'Mic permission nahi mili — candle pe tap karke bujha sakti ho';
+      btn.textContent = '🎤 Mic on karo — phoonk maaro';
+      btn.classList.remove('listening');
+    }
+  }
+
+  function stopBlowMic() {
+    if (!state.blowMic) return;
+    state.blowMic.active = false;
+    if (state.blowMic.rafId) cancelAnimationFrame(state.blowMic.rafId);
+    state.blowMic.stream?.getTracks().forEach((t) => t.stop());
+    state.blowMic.ctx?.close().catch(() => {});
+    state.blowMic = null;
+    $('#blow-mic-button').classList.remove('listening');
+  }
+
+  function bindBlowMic() {
+    $('#blow-mic-button').addEventListener('click', () => {
+      if (state.blowMic?.active) {
+        stopBlowMic();
+        $('#blow-mic-button').textContent = '🎤 Mic on karo — phoonk maaro';
+        $('#blow-mic-status').textContent = 'Mic band ho gayi';
+        return;
+      }
+      if ($$('.candle.out').length >= 5) return;
+      startBlowMic();
+    });
+
+    $('#close-celebration').addEventListener('click', () => {
+      $('#birthday-celebration').classList.add('hidden');
     });
   }
 
@@ -504,6 +672,7 @@
       e.preventDefault();
       if ($('#passcode').value === config.passcode) {
         $('#lock-note').textContent = '';
+        tryStartMusic();
         FX.screenTransition($('#lock'), $('#lock2'), () => {
           burst(undefined, undefined, 40);
           $$('#lock2 .reveal').forEach((el) => el.classList.add('visible'));
@@ -526,6 +695,7 @@
       const guess = $('#passcode-2').value;
       if (matchesLock2(guess)) {
         $('#lock2-note').textContent = '';
+        tryStartMusic();
         FX.screenTransition($('#lock2'), $('#landing'), () => burst(undefined, undefined, 50));
       } else {
         $('#lock2-note').textContent = config.frontPage.lock2.wrongPass;
@@ -572,6 +742,7 @@
       showAmbientLayer();
       FX.initScrollReveal();
       FX.initGifFloat();
+      tryStartMusic();
     });
   }
 
@@ -652,21 +823,9 @@
     $$('[data-section]').forEach((s) => observer.observe(s));
   }
 
-  function bindMusic() {
-    const audio = $('#audio');
-    audio.src = config.music.src;
-    audio.onerror = () => { $('#music-button').title = 'Add a local audio file in config.js'; };
-    audio.addEventListener('play', () => $('#music-button').classList.add('playing'));
-    audio.addEventListener('pause', () => $('#music-button').classList.remove('playing'));
-    $('#music-button').addEventListener('click', () => {
-      if (!config.music.src) { toast('Pehle config.js mein apna gaana add karo 🎵'); return; }
-      audio.paused ? audio.play().catch(() => toast('Phir se tap karo music ke liye.')) : audio.pause();
-    });
-  }
-
   function bindEvents() {
     $('#start-story').addEventListener('click', () => {
-      if (config.music.src) $('#audio').play().catch(() => {});
+      tryStartMusic();
       playOpening();
     });
     $('#skip-opening').addEventListener('click', finishOpening);
@@ -692,7 +851,7 @@
       burst(undefined, undefined, 90);
       FX.confetti(120);
       FX.heartRain(5000);
-      location.hash = 'gift-guess';
+      location.hash = 'bond-reels';
     });
 
     $('#gift').addEventListener('click', () => {
@@ -743,7 +902,7 @@
     buildOurPhotos();
     buildPhotoFilters();
     buildPhotoAlbum();
-    buildGiftGuess();
+    buildBondReels();
     buildReasons();
     buildBubuGrid();
     buildPromises();
@@ -753,6 +912,7 @@
     bindScrollProgress();
     bindNavSpy();
     bindMusic();
+    bindBlowMic();
     updateLoveMeter();
     spawnFloatingQuotes();
 

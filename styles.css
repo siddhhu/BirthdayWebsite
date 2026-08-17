@@ -1166,6 +1166,12 @@ input.shake { animation: shake .45s; }
   box-shadow: 0 12px 28px #0005;
   transition: .3s transform, .3s box-shadow;
   text-align: left;
+  animation: albumIn .45s ease backwards;
+}
+
+@keyframes albumIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .album-tile.hidden { display: none; }
@@ -1573,7 +1579,223 @@ input.shake { animation: shake .45s; }
   color: var(--gold);
 }
 
-/* ── Gift guess ───────────────────────────────────────────────────────────── */
+.blow-mic-btn {
+  margin: 8px auto 4px;
+  font-size: 13px;
+}
+
+.blow-mic-btn.listening {
+  border-color: #e98ba6;
+  color: #ffb8cc;
+  animation: micPulse 1.2s ease-in-out infinite;
+}
+
+.blow-mic-status {
+  font-size: 12px;
+  color: #c9b8d4;
+  min-height: 18px;
+  margin-bottom: 10px;
+}
+
+@keyframes micPulse {
+  0%, 100% { box-shadow: 0 0 0 0 #e98ba644; }
+  50% { box-shadow: 0 0 0 8px #e98ba600; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ── Birthday celebration overlay ─────────────────────────────────────────── */
+
+.birthday-celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: #0a0818cc;
+  backdrop-filter: blur(6px);
+  animation: fadeIn .4s ease;
+}
+
+.birthday-celebration.hidden { display: none; }
+
+.balloon-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.balloon {
+  position: absolute;
+  bottom: -60px;
+  animation: balloonRise linear forwards;
+  filter: drop-shadow(0 4px 8px #0005);
+}
+
+@keyframes balloonRise {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-110vh) rotate(12deg); opacity: .85; }
+}
+
+.birthday-popup {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 36px 28px 28px;
+  max-width: min(420px, 90vw);
+  border-radius: 24px;
+  background: linear-gradient(160deg, #2a1638ee, #14102eee);
+  border: 1px solid #e98ba655;
+  box-shadow: 0 30px 80px #0009, 0 0 60px #e98ba633;
+  animation: popIn .5s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+@keyframes popIn {
+  from { transform: scale(.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.birthday-popup-eyebrow {
+  letter-spacing: .4em;
+  font-size: 11px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.birthday-popup h2 {
+  font: 700 42px/1.1 var(--serif);
+  color: #ffb8cc;
+  margin: 0 0 8px;
+  text-shadow: 0 0 30px #e98ba666;
+}
+
+.birthday-popup-name {
+  font: italic 26px var(--serif);
+  color: #fff;
+  margin: 0 0 6px;
+}
+
+.birthday-popup-sub {
+  font-size: 14px;
+  color: #c9b8d4;
+  margin: 0 0 22px;
+}
+
+.birthday-popup .btn { min-width: 140px; }
+
+/* ── Bond reels ─────────────────────────────────────────────────────────────── */
+
+.bond-reels-section {
+  text-align: center;
+  background:
+    radial-gradient(circle at 30% 25%, #6b4a8877, transparent 38%),
+    radial-gradient(circle at 75% 75%, #c3618377, transparent 32%),
+    linear-gradient(155deg, #14102e, #2a1638);
+}
+
+.bond-reels-hint {
+  max-width: 560px;
+  margin: 0 auto;
+  color: #ffd8e8cc;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.bond-reel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 24px);
+  max-width: 1060px;
+  margin: 28px auto 0;
+  padding: 0 12px;
+}
+
+.bond-reel-card {
+  background: #ffffff0a;
+  border: 1px solid #ffffff20;
+  border-radius: 18px;
+  padding: 16px;
+  backdrop-filter: blur(8px);
+  text-align: center;
+  box-shadow: 0 16px 40px #0005;
+}
+
+.bond-reel-badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #e98ba633, #8377c433);
+  border: 1px solid #ffffff25;
+  font: 600 11px var(--sans);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.bond-reel-frame {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  max-width: 300px;
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid #ffffff28;
+  box-shadow: 0 20px 50px #0006, 0 0 35px #ffb5cc33;
+  background: #0d1028;
+}
+
+.bond-reel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bond-reel-video.hidden { display: none; }
+
+.bond-reel-placeholder {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  min-height: 200px;
+  padding: 20px;
+  font: italic 14px var(--serif);
+  color: #ffd8e8aa;
+  text-align: center;
+}
+
+.bond-reel-placeholder.hidden { display: none; }
+
+.bond-reel-copy {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.bond-reel-copy h3 {
+  font: italic 20px var(--serif);
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.bond-reel-copy p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #ffd8e8bb;
+}
+
+.bond-reels-footnote {
+  margin-top: 28px;
+  font: italic 17px var(--serif);
+  color: var(--gold);
+}
+
+/* ── Gift guess (legacy — unused) ─────────────────────────────────────────── */
 
 .gift-guess-section {
   text-align: center;
@@ -2152,6 +2374,9 @@ input.shake { animation: shake .45s; }
   .photo-filter { padding: 7px 12px; font-size: 11px; }
   .album-caption { padding: 8px 10px 10px; }
   .album-caption b { font-size: 12px; }
+
+  .bond-reel-grid { grid-template-columns: 1fr; max-width: 340px; }
+  .bond-reel-frame { max-width: 100%; }
 
   .gift-boxes { flex-direction: column; align-items: center; }
   .gift-box { width: min(300px, 92vw); }

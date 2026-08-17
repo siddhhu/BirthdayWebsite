@@ -57,7 +57,7 @@ window.UNIVERSE_CONFIG = {
     'Aaj poora din sirf tumhara hai, meri pagli si Booba. ✨'
   ],
 
-  music: { src: '', title: 'Tum Jo Aaye Zindagi Mein Baat Ban Gayi' },
+  music: { src: 'assets/music/tum_ho.mp3', title: 'Tum Ho' },
 
   gifs: {
     landing: { id: '11405352637608931529', label: 'See you, cutie!' },
@@ -209,37 +209,37 @@ window.UNIVERSE_CONFIG = {
     { id: 'moments', label: 'Chhoti yaadein' }
   ],
 
-  // Reel guess — drop 2 video reels in assets/videos/ (not gift clips — reel-style videos)
-  giftGuess: {
-    eyebrow: 'Reel time 🎬',
-    title: 'Guess karo na — kaun si asli reel hai?',
-    hint: 'Do mystery reels hain. Ek abhi chalegi ♡ Doosri thodi der baad drop hogi — par dono special hain.',
-    pickPrompt: 'Pehle kaun si reel dekhenge? 👇',
-    wrongPick: 'Arre cute! Yeh wali reel thodi wait karegi… doosra dabba try karo na?',
-    rightPick: 'Sahi choice! Yeh wali reel meri taraf se — asli gift main hoon ♡',
-    bothOpened: 'Dono reels unlock! Ek abhi, ek jald — double dose of pyaar ✦',
-    reelCta: 'Reel chalao →',
-    videoPlaceholder: 'Reel yahan add karo — config.js mein path set karo',
-    boxes: [
+  // Bond reels — videos in assets/videos/reel-1.mp4, reel-2.mp4, reel-3.mp4
+  bondReels: {
+    eyebrow: 'Hamara bond 🎬',
+    title: 'Teen reels, ek rishta.',
+    hint: 'Humari kahani — jo hum ho chuke hain aur jo hum ab bhi likh rahe hain, roz tumhare saath.',
+    footnote: 'SIDWANI — yeh sirf naam nahi, hamara bond hai ♡',
+    videoPlaceholder: 'Reel add karo — assets/videos/ folder mein',
+    reels: [
       {
-        id: 'me',
-        label: 'Mystery Reel A',
-        emoji: '🎬',
-        video: 'assets/videos/reel-now.mp4',
-        poster: '',
-        revealTitle: 'Meri reel — asli gift main hoon ♡',
-        revealText: 'Yeh reel meri taraf se… par asli surprise toh main hoon — tumhara Dudu, hamesha ke liye.',
-        isReal: true
+        id: 'reel-1',
+        label: 'Pehli yaadein',
+        emoji: '♡',
+        video: 'assets/videos/reel-1.mp4',
+        title: 'Ab tak ka hum',
+        text: 'Tuition se leke Banaras tak — har pal jahan hum thode aur apne ho gaye. Yeh reel usi bond ke baare mein hai.'
       },
       {
-        id: 'soon',
-        label: 'Mystery Reel B',
-        emoji: '📽️',
-        video: 'assets/videos/reel-soon.mp4',
-        poster: '',
-        revealTitle: 'Yeh reel jald drop hogi!',
-        revealText: 'Full reel abhi edit ho rahi hai — thoda sa wait, phir dhamaka. Teaser for now!',
-        isReal: false
+        id: 'reel-2',
+        label: 'Beech ka safar',
+        emoji: '✦',
+        video: 'assets/videos/reel-2.mp4',
+        title: 'Jo hum ban gaye',
+        text: 'Har reel ek chapter hai — hasi, masti, aur woh chhoti chhoti baatein jo sirf hum samajhte hain.'
+      },
+      {
+        id: 'reel-3',
+        label: 'Aaj ka hum',
+        emoji: '🎬',
+        video: 'assets/videos/reel-3.mp4',
+        title: 'Latest reel',
+        text: 'Sabse nayi reel — kyunki hamari kahani roz nayi lines likhti rehti hai. Tumhare saath, hamesha.'
       }
     ]
   },

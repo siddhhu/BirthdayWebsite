@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <meta name="theme-color" content="#0d1028"/>
   <title>Our Little Universe</title>
+  <base href="./"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"/>
@@ -105,7 +106,7 @@
       <a href="#bubu" data-nav="bubu">Bubu</a>
       <a href="#letter" data-nav="letter">Letter</a>
       <a href="#cake-section" data-nav="cake">Cake</a>
-      <a href="#gift-guess" data-nav="gift">Reel</a>
+      <a href="#bond-reels" data-nav="bond">Bond</a>
       <a href="#final" data-nav="final">Surprise</a>
     </nav>
 
@@ -248,38 +249,29 @@
     <section id="cake-section" class="section cake-section" data-section="cake">
       <p class="eyebrow reveal">Birthday wish time</p>
       <h2 class="reveal">Cake ki candles<br/><em>bujha do na.</em></h2>
-      <p class="reveal">Har candle pe tap karo, phir apni wish maang lo.</p>
+      <p class="reveal">Mic on karo aur phoonk maaro — ya candle pe tap bhi kar sakti ho 🎤</p>
       <div id="gif-cake" class="gif gif-cake"></div>
       <div class="cake-stage reveal">
         <img src="assets/shivani-birthday-cake.png" alt="A birthday cake for Shivani"/>
         <span class="cake-label">Shivani</span>
         <div id="candles" class="candles" aria-label="Birthday candles"></div>
       </div>
+      <button id="blow-mic-button" type="button" class="btn ghost blow-mic-btn reveal">🎤 Mic on karo — phoonk maaro</button>
+      <p id="blow-mic-status" class="blow-mic-status reveal"></p>
       <button id="wish-button" class="btn gold" disabled>Wish maang lo ✦</button>
       <p id="cake-status"></p>
     </section>
 
-    <!-- Reel guess -->
-    <section id="gift-guess" class="section gift-guess-section" data-section="gift">
+    <!-- Bond reels -->
+    <section id="bond-reels" class="section bond-reels-section" data-section="bond">
       <header class="section-head section-head-center reveal">
         <span>06</span>
-        <p class="eyebrow" id="gift-guess-eyebrow">Reel time 🎬</p>
-        <h2 id="gift-guess-title">Guess karo na — kaun si<br/><em>asli reel</em> hai?</h2>
-        <p id="gift-guess-hint" class="gift-guess-hint">Do mystery reels hain. Ek abhi chalegi ♡ Doosri thodi der baad drop hogi.</p>
+        <p class="eyebrow" id="bond-reels-eyebrow">Hamara bond 🎬</p>
+        <h2 id="bond-reels-title">Teen reels, ek <em>rishta.</em></h2>
+        <p id="bond-reels-hint" class="bond-reels-hint">Humari kahani — jo hum ho chuke hain aur jo hum ab bhi likh rahe hain.</p>
       </header>
-      <p id="gift-guess-prompt" class="gift-guess-prompt reveal">Pehle kaun si reel dekhenge? 👇</p>
-      <div id="gift-boxes" class="gift-boxes reveal"></div>
-      <div id="gift-reveal" class="gift-reveal hidden">
-        <div class="gift-video-wrap reel-frame">
-          <video id="gift-video" class="gift-video reel-player" controls playsinline preload="metadata"></video>
-          <p id="gift-video-placeholder" class="gift-video-placeholder hidden">Reel yahan add karo — config.js mein path set karo</p>
-        </div>
-        <div class="gift-reveal-copy">
-          <h3 id="gift-reveal-title"></h3>
-          <p id="gift-reveal-text"></p>
-        </div>
-      </div>
-      <p id="gift-guess-status" class="gift-guess-status reveal"></p>
+      <div id="bond-reel-grid" class="bond-reel-grid reveal"></div>
+      <p id="bond-reels-footnote" class="bond-reels-footnote reveal">SIDWANI — yeh sirf naam nahi, hamara bond hai ♡</p>
     </section>
 
     <!-- Final surprise -->
@@ -287,8 +279,8 @@
       <div id="gif-flying" class="gif flying-gif"></div>
       <div id="gif-flying-alt" class="gif flying-gif flying-gif-alt"></div>
 
-      <p class="eyebrow reveal">Last wala surprise</p>
-      <h2 class="reveal">Ab bas ek baat<br/><em>reh gayi hai…</em></h2>
+      <p class="eyebrow reveal">Dil se last baat</p>
+      <h2 class="reveal">Bas itna kehna<br/><em>chahta hoon…</em></h2>
 
       <div class="final-gif-row reveal">
         <div id="gif-final" class="final-gif-card gif-pop"></div>
@@ -320,7 +312,18 @@
     <button id="next-image" aria-label="Next image">→</button>
   </dialog>
 
-  <audio id="audio" preload="none" loop></audio>
+  <div id="birthday-celebration" class="birthday-celebration hidden" role="dialog" aria-modal="true" aria-labelledby="birthday-popup-title">
+    <div id="balloon-field" class="balloon-field" aria-hidden="true"></div>
+    <div class="birthday-popup">
+      <p class="birthday-popup-eyebrow">✦ ✦ ✦</p>
+      <h2 id="birthday-popup-title">Happy Birthday!</h2>
+      <p id="birthday-popup-name" class="birthday-popup-name">Shivani ✨</p>
+      <p id="birthday-popup-sub" class="birthday-popup-sub">Meri Booba — aaj poori duniya tumhari hai</p>
+      <button id="close-celebration" type="button" class="btn gold">Yay! ♡</button>
+    </div>
+  </div>
+
+  <audio id="audio" preload="auto" loop></audio>
   <script src="config.js"></script>
   <script src="animations.js"></script>
   <script src="script.js"></script>
