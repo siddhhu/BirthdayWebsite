@@ -2745,108 +2745,134 @@ input.shake { animation: shake .45s; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   ENHANCEMENT 7 — Song Dedication (Vinyl Record Cards)
+   Love radio — live player + rotating dedications
    ══════════════════════════════════════════════════════════════════════════ */
 
-.playlist-section {
-  padding-bottom: 80px;
-}
-
-.playlist-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.vinyl-card {
-  position: relative;
-  background: linear-gradient(145deg, #ffffff10, #ffffff05);
-  border: 1px solid #ffffff15;
-  border-radius: 20px;
-  padding: 28px 22px;
+.love-radio-section {
   text-align: center;
-  backdrop-filter: blur(8px);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-  cursor: default;
-  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 20%, #6b4a8877, transparent 42%),
+    linear-gradient(155deg, #14102e, #2a1638);
 }
 
-.vinyl-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at 50% 50%, var(--card-color, var(--pink)), transparent 50%);
-  opacity: 0.06;
-  transition: opacity 0.4s ease;
+.love-radio-player {
+  max-width: min(420px, 92vw);
+  margin: 28px auto 0;
+  padding: 28px 22px 24px;
+  border-radius: 24px;
+  background: linear-gradient(160deg, #ffffff14, #ffffff06);
+  border: 1px solid #ffffff22;
+  box-shadow: 0 24px 60px #0007, inset 0 1px #ffffff15;
+  backdrop-filter: blur(10px);
 }
 
-.vinyl-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 12px 40px #0004, 0 0 30px color-mix(in srgb, var(--card-color, var(--pink)) 15%, transparent);
+.radio-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-.vinyl-card:hover::before {
-  opacity: 0.12;
+.radio-station {
+  color: var(--gold);
+  font-weight: 600;
 }
 
-.vinyl-disc {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin: 0 auto 16px;
-  background: conic-gradient(from 0deg, #1a1a2e, #2d2d44, #1a1a2e, #2d2d44, #1a1a2e);
-  border: 3px solid #ffffff18;
-  position: relative;
-  animation: spin 4s linear infinite;
-  animation-play-state: paused;
-  box-shadow: 0 4px 16px #0003;
-}
-
-.vinyl-card:hover .vinyl-disc {
-  animation-play-state: running;
-}
-
-.vinyl-disc::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--card-color, var(--pink));
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--card-color, var(--pink)) 40%, transparent);
-}
-
-.vinyl-title {
-  font: 600 16px var(--sans);
-  color: var(--ink);
-  margin-bottom: 2px;
-}
-
-.vinyl-artist {
-  font: 400 12px var(--sans);
-  color: var(--muted);
-  margin-bottom: 12px;
-  letter-spacing: 0.3px;
-}
-
-.vinyl-why {
-  font: italic 13px var(--serif);
+.radio-frequency {
   color: var(--pink);
-  opacity: 0.85;
-  line-height: 1.5;
+  animation: freqBlink 2s ease-in-out infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+@keyframes freqBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .55; }
+}
+
+.radio-equalizer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 56px;
+  margin: 0 auto 20px;
+}
+
+.eq-bar {
+  width: 5px;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(to top, var(--lav), var(--pink));
+  opacity: .35;
+  transform-origin: bottom;
+}
+
+.love-radio-player.is-playing .eq-bar {
+  opacity: 1;
+  animation: eqPulse .85s ease-in-out infinite;
+  animation-delay: calc(var(--eq-i) * 0.05s);
+}
+
+@keyframes eqPulse {
+  0%, 100% { transform: scaleY(.35); }
+  50% { transform: scaleY(1); }
+}
+
+.radio-now-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff66;
+  margin: 0 0 6px;
+}
+
+.radio-track {
+  font: 700 28px/1.1 var(--serif);
+  color: #ffb8cc;
+  margin: 0 0 16px;
+  text-shadow: 0 0 24px #e98ba644;
+}
+
+.radio-dedication {
+  min-height: 72px;
+  margin: 0 0 22px;
+  padding: 0 8px;
+  font: italic 17px/1.55 var(--serif);
+  color: #fff;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .35s ease, transform .35s ease;
+  cursor: pointer;
+}
+
+.radio-dedication.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.radio-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.radio-play-btn { min-width: 130px; }
+
+.radio-live {
+  font-size: 11px;
+  color: #ff9ab5cc;
+  letter-spacing: .5px;
+  margin: 0;
+  animation: livePulse 1.8s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: .7; }
+  50% { opacity: 1; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -3011,29 +3037,14 @@ input.shake { animation: shake .45s; }
     padding: 8px 14px;
   }
 
-  .playlist-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-    padding: 0 16px;
+  .love-radio-player {
+    padding: 22px 16px 20px;
   }
 
-  .vinyl-card {
-    padding: 20px 16px;
-  }
-
-  .vinyl-disc {
-    width: 60px;
-    height: 60px;
-  }
+  .radio-track { font-size: 24px; }
 
   .time-capsule-card {
     padding: 36px 22px;
-  }
-}
-
-@media (max-width: 380px) {
-  .playlist-grid {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -3042,7 +3053,7 @@ input.shake { animation: shake .45s; }
   .twinkle-star,
   .countdown-wrap,
   .love-counter-heart,
-  .vinyl-disc,
+  .eq-bar,
   .music-viz i {
     animation: none !important;
   }

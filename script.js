@@ -952,30 +952,94 @@
     tick();
   }
 
-  // ── Enhancement: Song Dedication Builder ──────────────────────────────────
+  // ── Love radio (interactive, syncs with site music) ───────────────────────
 
-  function buildPlaylist() {
-    if (!config.playlist?.length) return;
-    const grid = $('#playlist-grid');
-    if (!grid) return;
+  function initLoveRadio() {
+    const radio = config.loveRadio;
+    if (!radio?.dedications?.length) return;
 
-    config.playlist.forEach((song, i) => {
-      const card = document.createElement('div');
-      card.className = 'vinyl-card reveal';
-      card.style.setProperty('--card-color', song.color || '#ff9ab5');
-      card.style.transitionDelay = `${i * 0.12}s`;
-      card.innerHTML = `
-        <div class="vinyl-disc"></div>
-        <p class="vinyl-title">${song.title}</p>
-        <p class="vinyl-artist">${song.artist}</p>
-        <p class="vinyl-why">"${song.why}"</p>
-      `;
-      card.addEventListener('click', () => {
-        burst(undefined, undefined, 20);
-        toast(`🎵 ${song.title} — ${song.artist}`);
-      });
-      grid.appendChild(card);
+    const player = $('.love-radio-player');
+    const eq = $('#radio-equalizer');
+    const dedicationEl = $('#radio-dedication');
+    const playBtn = $('#radio-play');
+    const audio = $('#audio');
+    if (!player || !eq || !dedicationEl || !playBtn || !audio) return;
+
+    $('#radio-station').textContent = radio.station;
+    $('#radio-frequency').textContent = radio.frequency;
+    $('#radio-track').textContent = radio.track;
+
+    for (let i = 0; i < 18; i++) {
+      const bar = document.createElement('span');
+      bar.className = 'eq-bar';
+      bar.style.setProperty('--eq-i', i);
+      eq.append(bar);
+    }
+
+    let dedicationIndex = 0;
+    let rotateTimer = null;
+
+    const syncPlayBtn = () => {
+      const playing = !audio.paused && !audio.ended;
+      playBtn.textContent = playing ? '⏸ Ruko' : '▶ Suno';
+      player.classList.toggle('is-playing', playing);
+    };
+
+    const showDedication = (next = false) => {
+      if (next) dedicationIndex = (dedicationIndex + 1) % radio.dedications.length;
+      dedicationEl.classList.remove('visible');
+      setTimeout(() => {
+        dedicationEl.textContent = `"${radio.dedications[dedicationIndex]}"`;
+        dedicationEl.classList.add('visible');
+        if (next) {
+          burst(undefined, undefined, 15);
+          FX.heartRain(1200);
+        }
+      }, 180);
+    };
+
+    const startRotation = () => {
+      stopRotation();
+      rotateTimer = setInterval(() => showDedication(true), 6500);
+    };
+
+    const stopRotation = () => {
+      if (rotateTimer) clearInterval(rotateTimer);
+      rotateTimer = null;
+    };
+
+    playBtn.addEventListener('click', () => {
+      if (!config.music.src) {
+        toast('Music file missing hai 🎵');
+        return;
+      }
+      if (audio.paused) {
+        audio.play().catch(() => toast('Phir se tap karo music ke liye.'));
+        tryStartMusic();
+      } else {
+        audio.pause();
+      }
     });
+
+    $('#radio-next').addEventListener('click', () => showDedication(true));
+
+    dedicationEl.addEventListener('click', () => showDedication(true));
+
+    audio.addEventListener('play', syncPlayBtn);
+    audio.addEventListener('pause', syncPlayBtn);
+    audio.addEventListener('ended', syncPlayBtn);
+
+    const section = $('#love-radio');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) startRotation();
+        else stopRotation();
+      });
+    }, { threshold: 0.35 });
+    if (section) observer.observe(section);
+
+    showDedication(false);
+    syncPlayBtn();
   }
 
   // ── Enhancement: Time Capsule Easter Egg ──────────────────────────────────
@@ -1170,7 +1234,7 @@
     // ── New Enhancements ──
     initCountdown();
     initLoveCounter();
-    buildPlaylist();
+    initLoveRadio();
     initTimeCapsule();
     applyCinematicReveals();
     FX.initCinematicReveal();

@@ -285,32 +285,20 @@ Tumhara Dudu ♡`,
 
   relationshipStart: '2018-06-27',
 
-  playlist: [
-    {
-      title: 'Tum Ho',
-      artist: 'Mohit Chauhan',
-      why: 'Kyunki tum sach mein ho — meri har saans mein.',
-      color: '#ff9ab5'
-    },
-    {
-      title: 'Tera Ban Jaunga',
-      artist: 'Akhil Sachdeva & Tulsi Kumar',
-      why: 'Tumhare bina main kya hoon? Bas tumhara.',
-      color: '#bba8ff'
-    },
-    {
-      title: 'Raataan Lambiyan',
-      artist: 'Jubin Nautiyal & Asees Kaur',
-      why: 'Lambhi raatein tumhare saath — wahi sabse pyaari.',
-      color: '#f5cc83'
-    },
-    {
-      title: 'Pehla Nasha',
-      artist: 'Udit Narayan & Sadhana Sargam',
-      why: 'Pehla pyaar ka feeling — aaj bhi wahi hai.',
-      color: '#e47f99'
-    }
-  ],
+  loveRadio: {
+    station: 'SIDWANI FM',
+    frequency: '18.08 ♡',
+    track: 'Tum Ho',
+    dedications: [
+      'Kyunki tum sach mein ho — meri har saans mein.',
+      'Tuition ki kursi se Banaras ki gali tak — har kadam tumhare saath.',
+      'Tumhare bina yeh gaana adhoora, tumhare saath poora universe.',
+      'Raat lambi ho ya din chhota — tum ho toh sab theek lagta hai.',
+      'Pehla pyaar wali feeling? Ab bhi tumhe dekhte hi wahi hota hai.',
+      'Booba + Dudu = SIDWANI. Bas. Khatam. Argument over.',
+      'Yeh sirf gaana nahi — meri tumhari kahani ka background score hai.'
+    ]
+  },
 
   timeCapsule: {
     message: 'Dear future Bubu & Dudu — ek saal pehle yeh website banayi thi. Tab se kitna kuch badal gaya hoga, par ek cheez nahi badli — pyaar. Jab yeh padho 2027 mein, toh yaad rakhna ki 2026 mein bhi hum utne hi pagal the ek dusre ke liye. SIDWANI forever ♡',
