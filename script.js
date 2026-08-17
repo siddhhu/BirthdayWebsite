@@ -952,6 +952,91 @@
     tick();
   }
 
+  // ── Life journey collage ───────────────────────────────────────────────────
+
+  function initLifeJourney() {
+    const journey = config.lifeJourney;
+    if (!journey?.image) return;
+
+    $('#journey-eyebrow').textContent = journey.eyebrow;
+    $('#journey-title').innerHTML = journey.title.replace('hamesha tumhare saath.', '<em>hamesha tumhare saath.</em>');
+    $('#journey-hint').textContent = journey.hint;
+
+    const img = $('#journey-image');
+    if (img) img.src = assetUrl(journey.image);
+
+    const stagesEl = $('#journey-stages');
+    const captionEl = $('#journey-caption');
+    if (!stagesEl || !journey.stages?.length) return;
+
+    let activeIndex = 0;
+    let rotateTimer = null;
+
+    const setStage = (index, fromUser = false) => {
+      activeIndex = ((index % journey.stages.length) + journey.stages.length) % journey.stages.length;
+      const stage = journey.stages[activeIndex];
+      $$('.journey-stage').forEach((btn, i) => btn.classList.toggle('active', i === activeIndex));
+      captionEl.classList.remove('visible');
+      setTimeout(() => {
+        captionEl.innerHTML = `<span class="journey-caption-emoji">${stage.emoji}</span> <strong>${stage.label}</strong> — ${stage.text}`;
+        captionEl.classList.add('visible');
+      }, 120);
+      if (fromUser) {
+        burst(undefined, undefined, 18);
+        FX.heartRain(1500);
+      }
+    };
+
+    journey.stages.forEach((stage, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'journey-stage';
+      btn.innerHTML = `<span>${stage.emoji}</span> ${stage.label}`;
+      btn.addEventListener('click', () => setStage(i, true));
+      stagesEl.append(btn);
+    });
+
+    const openJourneyLightbox = () => {
+      const lb = $('#journey-lightbox');
+      const lbImg = $('#journey-lightbox-image');
+      if (!lb || !lbImg) return;
+      lbImg.src = assetUrl(journey.image);
+      document.body.style.overflow = 'hidden';
+      lb.showModal();
+      burst(undefined, undefined, 25);
+    };
+
+    $('#journey-image-btn')?.addEventListener('click', openJourneyLightbox);
+
+    $('#close-journey-lightbox')?.addEventListener('click', () => {
+      $('#journey-lightbox')?.close();
+    });
+
+    $('#journey-lightbox')?.addEventListener('click', (e) => {
+      if (e.target === $('#journey-lightbox')) $('#journey-lightbox').close();
+    });
+
+    $('#journey-lightbox')?.addEventListener('close', () => {
+      document.body.style.overflow = '';
+    });
+
+    const section = $('#life-journey');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (rotateTimer) clearInterval(rotateTimer);
+          rotateTimer = setInterval(() => setStage(activeIndex + 1), 5000);
+        } else if (rotateTimer) {
+          clearInterval(rotateTimer);
+          rotateTimer = null;
+        }
+      });
+    }, { threshold: 0.25 });
+    if (section) observer.observe(section);
+
+    setStage(0);
+  }
+
   // ── Love radio (interactive, syncs with site music) ───────────────────────
 
   function initLoveRadio() {
@@ -1234,6 +1319,7 @@
     // ── New Enhancements ──
     initCountdown();
     initLoveCounter();
+    initLifeJourney();
     initLoveRadio();
     initTimeCapsule();
     applyCinematicReveals();

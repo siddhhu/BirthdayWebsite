@@ -148,6 +148,21 @@ window.UNIVERSE_CONFIG = {
     { date: '18 August', title: "Booba ka din", text: 'Aaj poori duniya meri roshni ko celebrate karti hai — happy birthday, Shivani!', emoji: '🎂' }
   ],
 
+  lifeJourney: {
+    image: 'assets/our-life-journey.png',
+    eyebrow: 'Poori zindagi ek frame mein',
+    title: 'Baby se leke budhape tak —<br/><em>hamesha tumhare saath.</em>',
+    hint: 'Har stage pe tap karo — thodi si kahani suno ♡',
+    stages: [
+      { id: 'baby', label: 'Baby Pic', emoji: '👶', text: 'Shuru se hi lagta tha — yeh hum dono ke liye likha hai.' },
+      { id: 'marriage', label: 'After Marriage', emoji: '💍', text: 'SIDWANI official — meri zindagi, meri Booba, meri jaan.' },
+      { id: 'recent', label: 'Recent Pic', emoji: '✨', text: 'Aaj ka hum — tuition se leke ab tak, aur aage bhi saath.' },
+      { id: 'kids', label: 'With Kids', emoji: '👨‍👩‍👧‍👦', text: 'Future mein bhi wahi pyaar — chhoti si family, bada sa ghar.' },
+      { id: 'old', label: 'Old Age Pic', emoji: '🤍', text: 'Budhape mein bhi wahi haath pakad ke — hamesha ke liye.' },
+      { id: 'selfie', label: 'Old Age Selfie', emoji: '📸', text: 'Boorhe ho ke bhi cute selfies — kyunki pyaar kabhi budha nahi hota.' }
+    ]
+  },
+
   // ── Photos (all from assets/photos/website/ — no duplicates across sections) ──
   photoFiles: [
     'IMG_0001','IMG_0002','IMG_0003','IMG_0004','IMG_0005','IMG_0006','IMG_0008','IMG_0009',

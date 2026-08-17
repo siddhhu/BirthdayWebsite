@@ -115,6 +115,7 @@
     <nav class="nav" aria-label="Sections">
       <a href="#home" data-nav="home">Home</a>
       <a href="#story" data-nav="story">Story</a>
+      <a href="#life-journey" data-nav="journey">Safar</a>
       <a href="#memories" data-nav="memories">Memories</a>
       <a href="#reasons" data-nav="reasons">Reasons</a>
       <a href="#bubu" data-nav="bubu">Bubu</a>
@@ -165,6 +166,24 @@
       </header>
       <div id="timeline" class="timeline"></div>
       <div id="gif-story" class="gif gif-story"></div>
+    </section>
+
+    <!-- Life journey collage -->
+    <section id="life-journey" class="section life-journey-section" data-section="journey">
+      <header class="section-head section-head-center reveal">
+        <span>♡</span>
+        <p class="eyebrow" id="journey-eyebrow">Poori zindagi ek frame mein</p>
+        <h2 id="journey-title">Baby se leke budhape tak —<br/><em>hamesha tumhare saath.</em></h2>
+        <p id="journey-hint">Har stage pe tap karo — thodi si kahani suno ♡</p>
+      </header>
+      <div class="journey-frame reveal">
+        <button type="button" id="journey-image-btn" class="journey-image-btn" aria-label="Open life journey collage full size">
+          <img id="journey-image" src="assets/our-life-journey.png" alt="Shivani and Siddharth life journey — baby, marriage, recent, with kids, and old age together" loading="eager"/>
+          <span class="journey-zoom-hint">Tap karke bada dekho ✦</span>
+        </button>
+      </div>
+      <div id="journey-stages" class="journey-stages reveal"></div>
+      <p id="journey-caption" class="journey-caption reveal"></p>
     </section>
 
     <!-- Memories -->
@@ -349,6 +368,14 @@
       <p class="sidwani-badge">SIDWANI · hamesha &amp; forever</p>
     </section>
   </main>
+
+  <dialog id="journey-lightbox" class="lightbox journey-lightbox">
+    <button id="close-journey-lightbox" aria-label="Close collage">×</button>
+    <figure>
+      <img id="journey-lightbox-image" alt="Our life journey collage"/>
+      <figcaption>Hum dono ki poori kahani — baby se budhape tak ♡</figcaption>
+    </figure>
+  </dialog>
 
   <dialog id="lightbox" class="lightbox">
     <button id="close-lightbox" aria-label="Close image">×</button>

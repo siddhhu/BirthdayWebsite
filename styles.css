@@ -1033,6 +1033,141 @@ input.shake { animation: shake .45s; }
 
 .moment.open p { display: block; }
 
+/* ── Life journey collage ─────────────────────────────────────────────────── */
+
+.life-journey-section {
+  text-align: center;
+  min-height: auto;
+  justify-content: flex-start;
+  padding-bottom: 100px;
+  background:
+    radial-gradient(circle at 50% 15%, #95537555, transparent 40%),
+    linear-gradient(160deg, #1a1535, #2d1a3a);
+}
+
+.journey-frame {
+  width: min(1080px, 96vw);
+  margin: 28px auto 22px;
+  padding: 14px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #ffffff18, #ffffff08);
+  border: 1px solid #ffffff28;
+  box-shadow:
+    0 30px 80px #0008,
+    0 0 60px #ff9ab522,
+    inset 0 1px #ffffff20;
+}
+
+.journey-image-btn {
+  display: block;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.journey-image-btn:hover,
+.journey-image-btn:focus-visible {
+  transform: scale(1.012);
+  box-shadow: 0 0 40px #ff9ab533;
+}
+
+.journey-image-btn img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+
+.journey-zoom-hint {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #0d1028cc;
+  border: 1px solid #ffffff30;
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: .3px;
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.journey-stages {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  max-width: 920px;
+  margin: 0 auto 16px;
+  padding: 0 12px;
+}
+
+.journey-stage {
+  border: 1px solid #ffffff28;
+  background: #ffffff10;
+  color: #fff;
+  padding: 9px 14px;
+  border-radius: 999px;
+  font: 600 12px var(--sans);
+  cursor: pointer;
+  transition: .25s transform, .25s background, .25s border-color, .25s box-shadow;
+}
+
+.journey-stage span {
+  margin-right: 4px;
+}
+
+.journey-stage:hover,
+.journey-stage.active {
+  background: linear-gradient(135deg, #e98ba6, #8377c4);
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px #0004;
+}
+
+.journey-caption {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 0 16px;
+  font: italic 18px/1.55 var(--serif);
+  color: #ffd8e8;
+  min-height: 56px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.journey-caption.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.journey-caption strong {
+  color: var(--gold);
+  font-style: normal;
+}
+
+.journey-caption-emoji {
+  font-style: normal;
+}
+
+.journey-lightbox figure {
+  max-width: min(1100px, 94vw);
+}
+
+.journey-lightbox figcaption {
+  font: italic 16px var(--serif);
+  color: var(--pink);
+}
+
 /* ── Memories ─────────────────────────────────────────────────────────────── */
 
 .gallery {
@@ -2397,6 +2532,29 @@ input.shake { animation: shake .45s; }
   .photo-filter { padding: 7px 12px; font-size: 11px; }
   .album-caption { padding: 8px 10px 10px; }
   .album-caption b { font-size: 12px; }
+
+  .journey-frame {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+  }
+
+  .journey-stage {
+    font-size: 10px;
+    padding: 7px 10px;
+  }
+
+  .journey-caption {
+    font-size: 15px;
+    min-height: 48px;
+  }
+
+  .journey-zoom-hint {
+    font-size: 10px;
+    padding: 6px 10px;
+    right: 10px;
+    bottom: 10px;
+  }
 
   .bond-reel-grid { grid-template-columns: 1fr; max-width: 340px; }
   .bond-reel-frame { max-width: 100%; }
